@@ -31,6 +31,7 @@ namespace ChevLoc
 
         #region propriétés
         private string Xlsheetname = "Listes";
+        private IndeterminateProgressBar pbLoadingStudents;
         #endregion
 
         #region méthodes
@@ -70,6 +71,7 @@ namespace ChevLoc
             if (result ==true)
             {
                 return Convert.ToString(ofd.FileName);
+                pbLoadingStudents = new IndeterminateProgressBar("Chargement des étudiants en cours... \n Veuillez patienter");
             }
             else
             {
@@ -158,6 +160,8 @@ namespace ChevLoc
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ImportInterop();
+            if (pbLoadingStudents != null)
+                pbLoadingStudents.Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
