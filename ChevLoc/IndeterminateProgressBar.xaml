@@ -1,0 +1,17 @@
+﻿<Window x:Class="ChevLoc.IndeterminateProgressBar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChevLoc"
+        mc:Ignorable="d"
+        Title="FIndeterminatePb" Height="112.971" Width="582.427">
+    <Window.Background>
+        <ImageBrush/>
+    </Window.Background>
+    <Grid>
+        <ProgressBar x:Name="pbIndeterminate" HorizontalAlignment="Left" Height="30" Margin="82,43,0,0" VerticalAlignment="Top" Width="419" IsIndeterminate="True"/>
+        <Label x:Name="lblTitle" Content="" HorizontalAlignment="Left" Margin="82,10,0,0" VerticalAlignment="Top" Width="419"/>
+
+    </Grid>
+</Window>
