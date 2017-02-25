@@ -70,8 +70,8 @@ namespace ChevLoc
             Nullable<bool> result = ofd.ShowDialog();
             if (result ==true)
             {
+                pbLoadingStudents = new IndeterminateProgressBar("Import des étudiants en cours");
                 return Convert.ToString(ofd.FileName);
-                pbLoadingStudents = new IndeterminateProgressBar("Chargement des étudiants en cours... \n Veuillez patienter");
             }
             else
             {
@@ -81,58 +81,64 @@ namespace ChevLoc
         private void ImportInterop()
         {
             Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
-            Excel.Workbook workbook = app.Workbooks.Open(OpenFile());
-            string wk = "[" + Xlsheetname + "$]";
-            Excel.Worksheet worksheet = NameXl(workbook, wk);
-            var range = worksheet.UsedRange;
             try
             {
-                int i=0;
-                for (int row = 0; row < range.Rows.Count-1; row++)
+                Excel.Workbook workbook = app.Workbooks.Open(OpenFile());
+                string wk = "[" + Xlsheetname + "$]";
+                Excel.Worksheet worksheet = NameXl(workbook, wk);
+                var range = worksheet.UsedRange;
+                try
                 {
-                    if (range.Cells[row+1, 1].Value.ToString() != "")
+                    int i = 0;
+                    for (int row = 0; row < range.Rows.Count - 1; row++)
                     {
-                        string[] data = new string[range.Columns.Count];
-                        for (int col = 0; col <= range.Columns.Count-1; col++)
+                        if (range.Cells[row + 1, 1].Value.ToString() != "")
                         {
-                            if (col != 3)
+                            string[] data = new string[range.Columns.Count];
+                            for (int col = 0; col <= range.Columns.Count - 1; col++)
                             {
-                                data[col] = range.Cells[row + 2, col + 1].Value.ToString(); ;
-                                //MessageBox.Show(range.Cells[row+2, col+1].Value.ToString());
+                                if (col != 3)
+                                {
+                                    data[col] = range.Cells[row + 2, col + 1].Value.ToString(); ;
+                                    //MessageBox.Show(range.Cells[row+2, col+1].Value.ToString());
+                                }
+                                else
+                                {
+                                    data[col] = range.Cells[row + 2, col + 1].Value.ToString();
+                                    //data[col] = DateTime.ParseExact(range.Cells[row + 2, col + 1].Value, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                                }
                             }
-                            else
+                            try
                             {
-                                data[col] = range.Cells[row + 2, col + 1].Value.ToString();
-                                //data[col] = DateTime.ParseExact(range.Cells[row + 2, col + 1].Value, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                                String d = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None).ToString("yyyy-MM-dd");
+                                Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp(), data[4]);
+                                i++;
                             }
-                        }
-                        try
-                        {
-                            String d = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None).ToString("yyyy-MM-dd");
-                            Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp(),data[4]);
-                            i++;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString());
-                            break;
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.ToString());
+                                break;
+                            }
                         }
                     }
+                    workbook.Close();
+                    app.Quit();
+                    KillProcess();
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                    MessageBox.Show("Insertion de " + i + " étudiants.", "", MessageBoxButton.OK);
                 }
-                workbook.Close();
-                app.Quit();
-                KillProcess();
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
-                MessageBox.Show("Insertion de " + i + " étudiants.", "", MessageBoxButton.OK);
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.ToString());
+                }
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString());
             }
         }
-        private string GenerateMdp()
+    private string GenerateMdp()
         {
             string caracteres = "azertyuiopqsdfghjklmwxcvbn1234567890";
             Random selAlea = new Random();

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace ChevLoc
 {
@@ -34,6 +35,7 @@ namespace ChevLoc
         public IndeterminateProgressBar(string ALbl)
         {
             InitializeComponent();
+            this.Focus();
             this.Visibility = Visibility.Visible;
             this.lblTitle.Content = ALbl;
         }
