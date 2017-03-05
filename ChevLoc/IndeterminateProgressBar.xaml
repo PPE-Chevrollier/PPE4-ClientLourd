@@ -10,7 +10,7 @@
         <ImageBrush/>
     </Window.Background>
     <Grid Background="White">
-        <ProgressBar x:Name="pbIndeterminate" HorizontalAlignment="Left" Height="30" Margin="82,43,0,0" VerticalAlignment="Top" Width="419" IsIndeterminate="True"/>
+        <ProgressBar x:Name="pbIndeterminate" HorizontalAlignment="Left" Height="30" Margin="82,43,0,0" VerticalAlignment="Top" Width="419"/>
         <Label x:Name="lblTitle" Content="" HorizontalAlignment="Left" Margin="82,10,0,0" VerticalAlignment="Top" Width="419"/>
 
     </Grid>

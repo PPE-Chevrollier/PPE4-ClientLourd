@@ -8,6 +8,7 @@
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
     <Grid>
         <Button Content="Charger étudiants" HorizontalAlignment="Left" Margin="23,10,0,0" VerticalAlignment="Top" Width="190" Click="Button_Click"/>
+        <ProgressBar x:Name="pbImportEtudiant" HorizontalAlignment="Left" Height="25" Margin="91,94,0,0" VerticalAlignment="Top" Width="222"/>
 
     </Grid>
 </Window>
