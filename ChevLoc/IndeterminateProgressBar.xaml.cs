@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace ChevLoc
 {
@@ -23,19 +24,25 @@ namespace ChevLoc
         {
             InitializeComponent();
         }
-        public IndeterminateProgressBar(int AWidth, int AHeight, string ALbl)
+        public IndeterminateProgressBar(int AWidth, int AHeight, string ALbl, int AMax)
         {
-            InitializeComponent();
-            this.Visibility = Visibility.Visible;
             this.Height = AHeight;
             this.Width = AWidth;
             this.lblTitle.Content = ALbl;
+            this.pbIndeterminate.Maximum = AMax;
+            this.Focus();
         }
-        public IndeterminateProgressBar(string ALbl)
+        public IndeterminateProgressBar(string ALbl, int AMax)
         {
-            InitializeComponent();
-            this.Visibility = Visibility.Visible;
             this.lblTitle.Content = ALbl;
+            this.pbIndeterminate.Maximum = AMax;
+            this.Focus();
+        }
+        public void Show(int AFunction)
+        {
+            int lInt = 0;
+            this.Show();
+            lInt = AFunction;
         }
     }
 }
