@@ -37,5 +37,10 @@ namespace ChevLoc
                 }
             }
         }
+
+        private void cbTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
     }
 }
