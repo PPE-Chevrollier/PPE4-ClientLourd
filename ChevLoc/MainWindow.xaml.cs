@@ -95,7 +95,7 @@ namespace ChevLoc
             {
                 for (row=0; row < ARange.Rows.Count - 1; row++)
                 {
-                    Apb.Dispatcher.Invoke(() => Apb.Value = row, System.Windows.Threading.DispatcherPriority.Background);
+                    Apb.Dispatcher.Invoke(() => Apb.Value = row, System.Windows.Threading.DispatcherPriority.Background);//rr
                     //Apb.Value = Apb.Value + 1;
                     System.Threading.Thread.Sleep(1);
                     if (ARange.Cells[row + 1, 1].Value.ToString() != "")
