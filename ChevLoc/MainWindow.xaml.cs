@@ -114,8 +114,11 @@ namespace ChevLoc
                         try
                         {
                             String d = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None).ToString("yyyy-MM-dd");
-                            Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp(),data[4]);
-                            i++;
+                            if (Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp()) != -1)
+                            {
+                                Controleur.Vmodele.InsertClasse(data[4]);
+                                i++;
+                            }
                         }
                         catch (Exception ex)
                         {

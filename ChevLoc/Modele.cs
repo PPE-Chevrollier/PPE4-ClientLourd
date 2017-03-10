@@ -102,14 +102,25 @@ namespace ChevLoc
         /// <param name="sexe">sex</param>
         /// <param name="mdp">mdp</param>
         /// <returns></returns>
-        public void InsertEtudiant(string nom, string prenom, string dnaiss, string sexe, string mdp, string classe)
+        public int InsertEtudiant(string nom, string prenom, string dnaiss, string sexe, string mdp)
         {
             string sql = @"CALL addEtudiant('" + nom + "','" + prenom + "', '" + dnaiss + "', '" + sexe + "','etudiant');";
-            string sql2 = @"CALL addClasseForEtu('" + classe + "');";
             try
             {
                 MySqlCommand cmd = new MySqlCommand(sql, myConnection);
-                cmd.ExecuteNonQuery();
+                return cmd.ExecuteNonQuery();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("error " + err.Message);
+                return -1;
+            }
+        }
+        public void InsertClasse(string classe)
+        {
+            string sql2 = @"CALL addClasseForEtu('" + classe + "');";
+            try
+            {
                 MySqlCommand cmd2 = new MySqlCommand(sql2, myConnection);
                 cmd2.ExecuteNonQuery();
             }
