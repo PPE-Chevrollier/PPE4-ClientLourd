@@ -27,6 +27,7 @@ namespace ChevLoc
         public MainWindow()
         {
             InitializeComponent();
+            pBChargerEtu.Visibility = Visibility.Hidden;
         }
 
         #region propriétés
@@ -87,16 +88,14 @@ namespace ChevLoc
             try
             {
                 int i=0;
+                pBChargerEtu.Visibility = Visibility.Visible;
+                pBChargerEtu.Maximum = range.Rows.Count;
                 for (int row = 0; row < range.Rows.Count-1; row++)
                 {
-<<<<<<< HEAD
-                    Apb.Dispatcher.Invoke(() => Apb.Value = row, System.Windows.Threading.DispatcherPriority.Background);//rr
+                    pBChargerEtu.Dispatcher.Invoke(() => pBChargerEtu.Value = row, System.Windows.Threading.DispatcherPriority.Background);//rr
                     //Apb.Value = Apb.Value + 1;
                     System.Threading.Thread.Sleep(1);
-                    if (ARange.Cells[row + 1, 1].Value.ToString() != "")
-=======
                     if (range.Cells[row+1, 1].Value.ToString() != "")
->>>>>>> origin/CL-VJO
                     {
                         string[] data = new string[range.Columns.Count];
                         for (int col = 0; col <= range.Columns.Count-1; col++)
@@ -132,6 +131,7 @@ namespace ChevLoc
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
                 MessageBox.Show("Insertion de " + i + " étudiants.", "", MessageBoxButton.OK);
+                pBChargerEtu.Visibility = Visibility.Hidden;
             }
             catch (Exception err)
             {

@@ -10,6 +10,7 @@
         <Menu>
             <MenuItem Header="_Crud" Click="MenuItem_Click" />
         </Menu>
-        <Button Content="Charger étudiants" HorizontalAlignment="Left" Margin="23,50,0,0" VerticalAlignment="Top" Width="190" Click="Button_Click"/>
+        <Button Content="Charger étudiants" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Click="Button_Click" Margin="23,29,0,0"/>
+        <ProgressBar x:Name="pBChargerEtu" HorizontalAlignment="Left" Height="22" Margin="269,29,0,0" VerticalAlignment="Top" Width="200"/>
     </Grid>
 </Window>
