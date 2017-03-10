@@ -20,6 +20,8 @@ namespace ChevLoc
     /// </summary>
     public partial class CRUD : Window
     {
+        private BindingSource bindingSource1;
+
         public CRUD()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace ChevLoc
         }
         private void CRUD_Load()
         {
-            dGvChevLoc.IsEnabled = false;
+            dGvChevLoc.Visibility = Visibility.Hidden;
             Controleur.Vmodele.charger_donnees("toutes");
             if (Controleur.Vmodele.Chargement)
             {
@@ -38,9 +40,35 @@ namespace ChevLoc
             }
         }
 
-        private void cbTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// évènement SelectedIndexChanged : à la sélection d'une table, on charge les données de la BD correspondantes dans le dataGridView 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbTable_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            
+            if (cbTable.SelectedIndex != -1)
+            {
+                string table = cbTable.SelectedItem.ToString(); // récupération de la table sélectionnée
+                Controleur.Vmodele.charger_donnees(table);      // chargement des données de la table sélectionné dans le DT correspondant
+                if (Controleur.Vmodele.Chargement)
+                {
+                    // un DT par table
+                    bindingSource1 = new BindingSource();
+
+                    switch (table)
+                    {
+                        case "APPARTENIR":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[1];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                    }
+
+                    // mise à jour du dataGridView via le bindingSource rempli par le DataTable
+                    dGvChevLoc.Items.Refresh();
+                    dGvChevLoc.Visibility = Visibility.Visible;
+                }
+            }
         }
     }
 }

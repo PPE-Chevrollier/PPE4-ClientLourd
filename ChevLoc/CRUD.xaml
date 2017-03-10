@@ -10,7 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ComboBox Name="cbTable" Margin="50,15,50,200" Width="150" Height="35" />
-        <DataGrid Width="200" Margin="50,95,42,10" Name="dGvChevLoc" Height="100"/>
+        <ComboBox Name="cbTable" Margin="50,15,50,200" Width="150" Height="35" SelectionChanged="cbTable_SelectionChanged_1" />
+        <DataGrid Width="500" Margin="50,95,42,10" Name="dGvChevLoc" Height="250"/>
     </Grid>
 </Window>
