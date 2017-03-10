@@ -122,7 +122,6 @@ namespace ChevLoc
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.ToString());
                             break;
                         }
                     }

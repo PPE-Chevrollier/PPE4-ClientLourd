@@ -104,7 +104,7 @@ namespace ChevLoc
         /// <returns></returns>
         public int InsertEtudiant(string nom, string prenom, string dnaiss, string sexe, string mdp)
         {
-            string sql = @"CALL addEtudiant('" + nom + "','" + prenom + "', '" + dnaiss + "', '" + sexe + "','etudiant');";
+            string sql = @"CALL addetudiant('" + nom + "','" + prenom + "', '" + dnaiss + "', '" + sexe + "','" + mdp +");";
             try
             {
                 MySqlCommand cmd = new MySqlCommand(sql, myConnection);
@@ -112,13 +112,13 @@ namespace ChevLoc
             }
             catch (Exception err)
             {
-                MessageBox.Show("error " + err.Message);
+                MessageBox.Show(err.ToString());
                 return -1;
             }
         }
         public void InsertClasse(string classe)
         {
-            string sql2 = @"CALL addClasseForEtu('" + classe + "');";
+            string sql2 = @"CALL addclasseforetu('" + classe + "');";
             try
             {
                 MySqlCommand cmd2 = new MySqlCommand(sql2, myConnection);
@@ -162,7 +162,7 @@ namespace ChevLoc
         /// </summary>
         public void seconnecter()
         {
-            string myConnectionString = "Database=bd_ppe_test;Data Source=192.168.152.2;User Id=ppe;Password=Azerty123;";
+            string myConnectionString = "Database=bd_ppe;Data Source=192.168.152.2;User Id=ppe;Password=Azerty123;";
             myConnection = new MySqlConnection(myConnectionString);
             try // tentative 
             {
