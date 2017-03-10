@@ -1,15 +1,12 @@
-﻿<Window x:Class="ChevLoc.MainWindow"
+﻿<Window x:Class="ChevLoc.FormCRUDClasses"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChevLoc"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+        Title="FormCRUDClasses" Height="300" Width="300">
     <Grid>
-        <Menu>
-            <MenuItem Header="_Crud" Click="MenuItem_Click" />
-        </Menu>
-        <Button Content="Charger étudiants" HorizontalAlignment="Left" Margin="23,50,0,0" VerticalAlignment="Top" Width="190" Click="Button_Click"/>
+        <TextBox Name="TbNom" />
     </Grid>
 </Window>
