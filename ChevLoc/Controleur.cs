@@ -37,7 +37,7 @@ namespace ChevLoc
         /// </summary>
         /// <param name="c">définit l'action : c:create, u update, d delete</param>
         /// <param name="indice">indice de l'élément sélectionné à modifier ou supprimer, -1 si ajout</param>
-        public static void crud_classes(Char c, int indice)
+        /*public static void crud_classes(Char c, int indice)
         {
             if (c == 'd') // cas de la suppression
             {
@@ -102,7 +102,5 @@ namespace ChevLoc
          }*/
 
                 #endregion
-            }
-        }
     }
 }

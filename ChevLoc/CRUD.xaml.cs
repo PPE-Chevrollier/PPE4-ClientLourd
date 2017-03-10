@@ -58,8 +58,56 @@ namespace ChevLoc
 
                     switch (table)
                     {
-                        case "APPARTENIR":
+                        case "appartenir":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[1];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "classes":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[2];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "commentaires":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[3];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "composent":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[4];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "correspondre":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[5];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "dates":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[6];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "equipements":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[7];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "logements":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[8];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "motifs":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[9];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "personnes":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[10];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "photos":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[11];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "propositions":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[12];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
+                        case "villes":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[13];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                     }

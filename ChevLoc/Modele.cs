@@ -234,41 +234,44 @@ namespace ChevLoc
                 case "toutes":
                     charger("show tables;", dT[0], dA[0]);
                     break;
-                case "APPARTENIR":
-                    charger("select * from APPARTENIR;", dT[1], dA[1]);
+                case "appartenir":
+                    charger("select * from appartenir;", dT[1], dA[1]);
                     break;
-                case "CLASSES":
-                    charger("select * from CLASSES;", dT[2], dA[2]);
+                case "classes":
+                    charger("select * from classes;", dT[2], dA[2]);
                     break;
-                case "COMMENTAIRES":
-                    charger("select * from COMMENTAIRES;", dT[3], dA[3]);
+                case "commentaires":
+                    charger("select * from commentaires;", dT[3], dA[3]);
                     break;
-                case "COMPOSENT":
-                    charger("select * from COMPOSENT;", dT[4], dA[4]);
+                case "composent":
+                    charger("select * from composent;", dT[4], dA[4]);
                     break;
-                case "CORRESPONDRE":
-                    charger("select * from CORRESPONDRE;", dT[5], dA[5]);
+                case "correspondre":
+                    charger("select * from correspondre;", dT[5], dA[5]);
                     break;
-                case "DATES":
-                    charger("select * from DATES;", dT[6], dA[6]);
+                case "dates":
+                    charger("select * from dates;", dT[6], dA[6]);
                     break;
-                case "EQUIPEMENTS":
-                    charger("select * from EQUIPEMENTS;", dT[7], dA[7]);
+                case "equipements":
+                    charger("select * from equipements;", dT[7], dA[7]);
                     break;
-                case "LOGEMENTS":
-                    charger("select * from LOGEMENTS;", dT[8], dA[8]);
+                case "logements":
+                    charger("select * from logements;", dT[8], dA[8]);
                     break;
-                case "MOTIFS":
-                    charger("select * from MOTIFS ;", dT[9], dA[9]);
+                case "motifs":
+                    charger("select * from motifs ;", dT[9], dA[9]);
                     break;
-                case "PERSONNES":
-                    charger("select * from PERSONNES ;", dT[10], dA[10]);
+                case "personnes":
+                    charger("select * from personnes ;", dT[10], dA[10]);
                     break;
-                case "PHOTOS":
-                    charger("select * from PHOTOS ;", dT[11], dA[11]);
+                case "photos":
+                    charger("select * from photos ;", dT[11], dA[11]);
                     break;
-                case "PROPOSITIONS":
-                    charger("select * from PROPOSITIONS ;", dT[12], dA[12]);
+                case "propositions":
+                    charger("select * from propositions ;", dT[12], dA[12]);
+                    break;
+                case "villes":
+                    charger("select * from villes;", dT[13], dA[13]);
                     break;
             }
         }
