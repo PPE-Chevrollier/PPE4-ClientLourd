@@ -16,7 +16,6 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Threading;
 
 namespace ChevLoc
 {
@@ -25,19 +24,14 @@ namespace ChevLoc
     /// </summary>
     public partial class MainWindow : Window
     {
-        Timer t;
         public MainWindow()
         {
             InitializeComponent();
-            pbImportEtudiant.Visibility = Visibility.Hidden;
         }
 
         #region propriétés
         private string Xlsheetname = "Listes";
-        private IndeterminateProgressBar pbLoadingStudents;
-        Microsoft.Office.Interop.Excel.Application app;
-        Excel.Workbook workbook;
-        Excel.Worksheet worksheet;
+        //private IndeterminateProgressBar pbLoadingStudents;
         #endregion
 
         #region méthodes
@@ -66,7 +60,7 @@ namespace ChevLoc
                     return workbook.Worksheets.Item[i];
                 }
             }
-            return null;
+            return workbook.Worksheets.Item[1];
         }
         private string OpenFile()
         {
@@ -83,85 +77,61 @@ namespace ChevLoc
                 return "error";
             }
         }
-        private Excel.Range DeterminateRange(Excel.Worksheet worksheet, ref int ARowCount)
+        private void ImportInterop()
         {
-            ARowCount = worksheet.UsedRange.Rows.Count;
-            return worksheet.UsedRange;
-        }
-        private int InsertDataBase(Excel.Range ARange, ProgressBar Apb)
-        {
-            int row = 0;
+            Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+            Excel.Workbook workbook = app.Workbooks.Open(OpenFile());
+            string wk = "[" + Xlsheetname + "$]";
+            Excel.Worksheet worksheet = NameXl(workbook, wk);
+            var range = worksheet.UsedRange;
             try
             {
-                for (row=0; row < ARange.Rows.Count - 1; row++)
+                int i=0;
+                for (int row = 0; row < range.Rows.Count-1; row++)
                 {
-                    Apb.Dispatcher.Invoke(() => Apb.Value = row, System.Windows.Threading.DispatcherPriority.Background);
-                    //Apb.Value = Apb.Value + 1;
-                    System.Threading.Thread.Sleep(1);
-                    if (ARange.Cells[row + 1, 1].Value.ToString() != "")
+                    if (range.Cells[row+1, 1].Value.ToString() != "")
                     {
-                        string[] data = new string[ARange.Columns.Count];
-                        for (int col = 0; col <= ARange.Columns.Count - 1; col++)
+                        string[] data = new string[range.Columns.Count];
+                        for (int col = 0; col <= range.Columns.Count-1; col++)
                         {
                             if (col != 3)
                             {
-                                data[col] = ARange.Cells[row + 2, col + 1].Value.ToString(); ;
+                                data[col] = range.Cells[row + 2, col + 1].Value.ToString(); ;
                                 //MessageBox.Show(range.Cells[row+2, col+1].Value.ToString());
                             }
                             else
                             {
-                                data[col] = ARange.Cells[row + 2, col + 1].Value.ToString();
+                                data[col] = range.Cells[row + 2, col + 1].Value.ToString();
                                 //data[col] = DateTime.ParseExact(range.Cells[row + 2, col + 1].Value, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString();
                             }
                         }
                         try
                         {
                             String d = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None).ToString("yyyy-MM-dd");
-                            Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp(), data[4]);
+                            Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp(),data[4]);
+                            i++;
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.ToString());
-                            return -1 ;
+                            break;
                         }
                     }
                 }
-                return row;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.ToString());
-                return -1;
-            }
-        }
-        private void ImportInterop()
-        {
-            app = new Microsoft.Office.Interop.Excel.Application();
-            workbook = app.Workbooks.Open(OpenFile());
-            worksheet = NameXl(workbook, Xlsheetname);
-            int lRowCount = 0;
-            Excel.Range range =  DeterminateRange(worksheet, ref lRowCount);
-            pbImportEtudiant.Maximum = lRowCount;
-            pbImportEtudiant.Visibility = Visibility.Visible;
-            try
-            {
-                InsertDataBase(range, pbImportEtudiant);
                 workbook.Close();
                 app.Quit();
                 KillProcess();
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
-                MessageBox.Show("Insertion de " + lRowCount + " étudiants.", "", MessageBoxButton.OK);
-                pbImportEtudiant.Visibility = Visibility.Hidden;
-                pbImportEtudiant.Value = 0;
+                MessageBox.Show("Insertion de " + i + " étudiants.", "", MessageBoxButton.OK);
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.ToString());
             }
         }
-    private string GenerateMdp()
+        private string GenerateMdp()
         {
             string caracteres = "azertyuiopqsdfghjklmwxcvbn1234567890";
             Random selAlea = new Random();
@@ -189,8 +159,8 @@ namespace ChevLoc
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ImportInterop();
-            if (pbLoadingStudents != null)
-                pbLoadingStudents.Close();
+           /* if (pbLoadingStudents != null)
+                pbLoadingStudents.Close();*/
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -205,6 +175,12 @@ namespace ChevLoc
             {
                 MessageBox.Show("BD connectée", "Information BD",MessageBoxButton.OK);
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            CRUD P = new CRUD();
+            P.Show();
         }
     }
 }
