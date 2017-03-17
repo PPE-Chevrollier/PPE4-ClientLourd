@@ -7,6 +7,5 @@
         mc:Ignorable="d"
         Title="FormCRUDClasses" Height="300" Width="300">
     <Grid>
-        <TextBox Name="TbNom" />
     </Grid>
 </Window>
