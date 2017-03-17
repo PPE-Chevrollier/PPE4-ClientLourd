@@ -10,7 +10,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ComboBox Name="cbTable" Margin="50,15,50,200" Width="150" Height="35" SelectionChanged="cbTable_SelectionChanged_1" />
-        <DataGrid Width="500" Margin="50,95,42,10" Name="dGvChevLoc" Height="250"/>
+        <ComboBox Name="cbTable" Margin="62,10,60,204" SelectionChanged="cbTable_SelectionChanged_1" />
+        <DataGrid Margin="44,70,0,67" Name="dGvChevLoc" HorizontalAlignment="Left" Width="224"/>
+        <Button x:Name="Ajouter" Content="Ajouter" HorizontalAlignment="Left" Margin="32,221,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button x:Name="Supprimer" Content="Supprimer" HorizontalAlignment="Left" Margin="194,221,0,0" VerticalAlignment="Top" Width="74"/>
     </Grid>
 </Window>
