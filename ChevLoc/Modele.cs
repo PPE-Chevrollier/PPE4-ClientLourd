@@ -221,7 +221,7 @@ namespace ChevLoc
             switch (table)
             {
                 case "toutes":
-                    charger("show tables;", dT[0], dA[0]);
+                    charger("show tables FROM bd_ppe WHERE tables_in_bd_ppe NOT LIKE 'vue_%';", dT[0], dA[0]);
                     break;
                 case "appartenir":
                     charger("select * from appartenir;", dT[1], dA[1]);

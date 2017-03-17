@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChevLoc"
         mc:Ignorable="d"
-        Title="FormCRUDClasses" Height="300" Width="300">
+        Title="FormCRUDClasses" Height="300" Width="500">
     <Grid>
+
+        <TextBox Name="tb_classes" Margin="171,114,171,129" Width="150"/>
+        <Label x:Name="lb_classes" Content="Classes" HorizontalAlignment="Left" Margin="70,114,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
