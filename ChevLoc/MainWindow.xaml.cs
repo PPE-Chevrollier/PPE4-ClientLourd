@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net;
+using System.IO;
+using System.Security.Cryptography;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -36,6 +39,41 @@ namespace ChevLoc
         #endregion
 
         #region méthodes
+        private void HttpRequest(string login)
+        {
+            String rep = new WebClient().DownloadString("192.168.152.1/API/reset_Mdp/" + login);
+            //UriBuilder uriB = new UriBuilder();
+            //uriB.Host = "www.google.fr";
+            //uriB.Path = "search";
+            //uriB.Query = "hl=en&q=httpwebrequest&aq=0&oq=Httpweb";
+
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+
+            //request.Method = WebRequestMethods.Http.Get;
+            //// Set some reasonable limits on resources used by this request
+            //request.MaximumAutomaticRedirections = 4;
+            //request.MaximumResponseHeadersLength = 4;
+            //// Set credentials to use for this request.
+            //request.Credentials = CredentialCache.DefaultCredentials;
+            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            //if (response.StatusCode == HttpStatusCode.OK)
+            //{
+            //    // Get the stream associated with the response.
+            //    using (Stream receiveStream = response.GetResponseStream())
+            //    {
+            //        // Pipes the stream to a higher level stream reader with the required encoding format. 
+            //        using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
+            //        {
+            //            return 1;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    return 0;
+            //}
+        }
         private void KillProcess()
         {
             System.Diagnostics.Process[] objProcess = System.Diagnostics.Process.GetProcessesByName("EXCEL");
@@ -80,8 +118,16 @@ namespace ChevLoc
         }
         private void ImportInterop()
         {
+            Excel.Workbook workbook;
             Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
-            Excel.Workbook workbook = app.Workbooks.Open(OpenFile());
+            try
+            {
+                workbook = app.Workbooks.Open(OpenFile());
+            }
+            catch(Exception ex)
+            {
+                return;
+            }
             string wk = "[" + Xlsheetname + "$]";
             Excel.Worksheet worksheet = NameXl(workbook, wk);
             var range = worksheet.UsedRange;
@@ -89,7 +135,7 @@ namespace ChevLoc
             {
                 int i=0;
                 pBChargerEtu.Visibility = Visibility.Visible;
-                pBChargerEtu.Maximum = range.Rows.Count;
+                pBChargerEtu.Maximum = range.Rows.Count-1;
                 for (int row = 0; row < range.Rows.Count-1; row++)
                 {
                     pBChargerEtu.Dispatcher.Invoke(() => pBChargerEtu.Value = row, System.Windows.Threading.DispatcherPriority.Background);//rr
@@ -114,15 +160,20 @@ namespace ChevLoc
                         try
                         {
                             String d = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None).ToString("yyyy-MM-dd");
-                            if (Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp()) != -1)
+                            if (Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp(), data[4], data[5]) == 1)
                             {
-                                Controleur.Vmodele.InsertClasse(data[4]);
                                 i++;
+                                try
+                                {
+                                    HttpRequest(Controleur.Vmodele.ReturnLoginLastId().Rows[0].ItemArray.ElementAt(0).ToString());
+                                }
+                                catch (Exception ex)
+                                {
+                                }
                             }
                         }
                         catch (Exception ex)
                         {
-                            break;
                         }
                     }
                 }
@@ -139,6 +190,11 @@ namespace ChevLoc
             {
                 MessageBox.Show(err.ToString());
             }
+        }
+        static string Hash(string input)
+        {
+            var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
+            return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
         }
         private string GenerateMdp()
         {
@@ -160,8 +216,7 @@ namespace ChevLoc
                     sel += carac.ToLower(); //Min
                 }
             }
-
-            return sel;
+            return Hash(sel);
         }
         #endregion
 

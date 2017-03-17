@@ -102,9 +102,9 @@ namespace ChevLoc
         /// <param name="sexe">sex</param>
         /// <param name="mdp">mdp</param>
         /// <returns></returns>
-        public int InsertEtudiant(string nom, string prenom, string dnaiss, string sexe, string mdp)
+        public int InsertEtudiant(string nom, string prenom, string dnaiss, string sexe, string mdp,string classe, string email)
         {
-            string sql = @"CALL addetudiant('" + nom + "','" + prenom + "', '" + dnaiss + "', '" + sexe + "','" + mdp +");";
+            string sql = @"CALL addetudiant('" + nom + "','" + prenom + "', '" + dnaiss + "', '" + sexe + "','" + mdp +"','" + classe +"','" + email +"');";
             try
             {
                 MySqlCommand cmd = new MySqlCommand(sql, myConnection);
@@ -112,22 +112,17 @@ namespace ChevLoc
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString());
-                return -1;
+                return 0;
             }
         }
-        public void InsertClasse(string classe)
+        public DataTable ReturnLoginLastId()
         {
-            string sql2 = @"CALL addclasseforetu('" + classe + "');";
-            try
-            {
-                MySqlCommand cmd2 = new MySqlCommand(sql2, myConnection);
-                cmd2.ExecuteNonQuery();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show("error " + err.Message);
-            }
+            DataTable dT = new DataTable();
+            MySqlDataAdapter dA = new MySqlDataAdapter();
+            string ret = "null";
+            string sql = "SELECT login_etudiants FROM etudiants ORDER BY id_etudiants DESC LIMIT 1;";
+            charger(sql,dT,dA);
+            return dT;
         }
 
 
