@@ -19,6 +19,7 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Excel = Microsoft.Office.Interop.Excel;
+using EASendMail;
 
 namespace ChevLoc
 {
@@ -35,44 +36,47 @@ namespace ChevLoc
 
         #region propriétés
         private string Xlsheetname = "Listes";
+        static string site = "192.168.152.1";
         //private IndeterminateProgressBar pbLoadingStudents;
         #endregion
 
         #region méthodes
-        private void HttpRequest(string login)
+        public static bool CreateMessage(string to,string mdp)
         {
-            String rep = new WebClient().DownloadString("192.168.152.1/API/reset_Mdp/" + login);
-            //UriBuilder uriB = new UriBuilder();
-            //uriB.Host = "www.google.fr";
-            //uriB.Path = "search";
-            //uriB.Query = "hl=en&q=httpwebrequest&aq=0&oq=Httpweb";
+            SmtpMail oMail = new SmtpMail("TryIt");
+            SmtpClient oSmtp = new SmtpClient();
 
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+            // Set sender email address, please change it to yours
+            oMail.From = "chevloc2@gmail.com";
 
-            //request.Method = WebRequestMethods.Http.Get;
-            //// Set some reasonable limits on resources used by this request
-            //request.MaximumAutomaticRedirections = 4;
-            //request.MaximumResponseHeadersLength = 4;
-            //// Set credentials to use for this request.
-            //request.Credentials = CredentialCache.DefaultCredentials;
-            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            // Set recipient email address, please change it to yours
+            oMail.To = to;
 
-            //if (response.StatusCode == HttpStatusCode.OK)
-            //{
-            //    // Get the stream associated with the response.
-            //    using (Stream receiveStream = response.GetResponseStream())
-            //    {
-            //        // Pipes the stream to a higher level stream reader with the required encoding format. 
-            //        using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
-            //        {
-            //            return 1;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    return 0;
-            //}
+            // Set email subject
+            oMail.Subject = "Réinitialisation de votre mot de passe Chevloc";
+
+            // Set email body
+            oMail.TextBody = "Bonjour " + Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(2).ToString() + ",\n\nVoici votre nouveau mot de passe : " + mdp + "\nVous pourrez le changer sur nore site " + site + ", rubrique \"profil\".\n\nL'équipe Chevloc";
+
+            // Your SMTP server address
+            SmtpServer oServer = new SmtpServer("smtp.gmail.com");
+            //oServer.AuthType = SmtpAuthType.XOAUTH2;
+            // Set 25 or 587 port.
+            oServer.Port = 465;
+            // detect TLS connection automatically
+            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+            oServer.User = "chevloc2@gmail.com";
+            oServer.Password = "Azerty123";
+
+            try
+            {
+                oSmtp.SendMail(oServer, oMail);
+                return true;
+            }
+            catch (Exception ep)
+            {
+                return false;
+            }
         }
         private void KillProcess()
         {
@@ -160,15 +164,18 @@ namespace ChevLoc
                         try
                         {
                             String d = DateTime.ParseExact(data[3], "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None).ToString("yyyy-MM-dd");
-                            if (Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], GenerateMdp(), data[4], data[5]) == 1)
+                            if (Controleur.Vmodele.InsertEtudiant(data[0], data[1], d, data[2], Hash(GenerateMdp()), data[4], data[5]) == 1)
                             {
                                 i++;
                                 try
                                 {
-                                    HttpRequest(Controleur.Vmodele.ReturnLoginLastId().Rows[0].ItemArray.ElementAt(0).ToString());
+                                    string mdp = GenerateMdp();
+                                    Controleur.Vmodele.ChangePassword(Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(0).ToString(), Hash(mdp));
+                                    CreateMessage(Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(1).ToString(), mdp);
                                 }
                                 catch (Exception ex)
                                 {
+                                    MessageBox.Show(ex.ToString());
                                 }
                             }
                         }
@@ -216,15 +223,13 @@ namespace ChevLoc
                     sel += carac.ToLower(); //Min
                 }
             }
-            return Hash(sel);
+            return sel;
         }
         #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ImportInterop();
-           /* if (pbLoadingStudents != null)
-                pbLoadingStudents.Close();*/
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

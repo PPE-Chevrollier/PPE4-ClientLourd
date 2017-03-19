@@ -115,16 +115,27 @@ namespace ChevLoc
                 return 0;
             }
         }
-        public DataTable ReturnLoginLastId()
+        public DataTable ReturnLoginEmailLastId()
         {
             DataTable dT = new DataTable();
             MySqlDataAdapter dA = new MySqlDataAdapter();
-            string ret = "null";
-            string sql = "SELECT login_etudiants FROM etudiants ORDER BY id_etudiants DESC LIMIT 1;";
+            string sql = "SELECT login_etudiants, email_etudiants, prenom_personnes FROM etudiants INNER JOIN personnes ON personnes.id_personnes = etudiants.id_etudiants ORDER BY id_etudiants DESC LIMIT 1;";
             charger(sql,dT,dA);
             return dT;
         }
-
+        public int ChangePassword(string login, string mdp)
+        {
+           string sql = "UPDATE etudiants SET mdp_etudiants = '" + mdp + "' WHERE login_etudiants = '" + login + "';";
+           try
+           {
+               MySqlCommand cmd = new MySqlCommand(sql, myConnection);
+               return cmd.ExecuteNonQuery();
+           }
+           catch (Exception err)
+           {
+               return 0;
+           }
+        }
 
         /// <summary>
         /// les DataAdapter et DataTable seront gérés dans des collection avec pour chaque un indice correspondant :
