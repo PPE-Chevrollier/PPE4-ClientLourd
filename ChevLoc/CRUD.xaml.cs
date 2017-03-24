@@ -110,6 +110,10 @@ namespace ChevLoc
                             bindingSource1.DataSource = Controleur.Vmodele.DT[13];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
+                        case "etudiants":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[13];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
                     }
 
                     // mise à jour du dataGridView via le bindingSource rempli par le DataTable

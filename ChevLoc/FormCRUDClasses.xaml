@@ -10,5 +10,7 @@
 
         <TextBox Name="tb_classes" Margin="171,114,171,129" Width="150"/>
         <Label x:Name="lb_classes" Content="Classes" HorizontalAlignment="Left" Margin="70,114,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="OK" Content="OK&#xD;&#xA;" HorizontalAlignment="Left" Margin="70,191,0,0" VerticalAlignment="Top" Width="80" Height="26" Click="OK_Click"/>
+        <Button x:Name="button1" Content="Annuler&#xD;&#xA;" HorizontalAlignment="Left" Margin="318,191,0,0" VerticalAlignment="Top" Width="79" Height="26" Click="button1_Click"/>
     </Grid>
 </Window>

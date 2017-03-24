@@ -268,8 +268,12 @@ namespace ChevLoc
                 case "villes":
                     charger("select * from villes;", dT[13], dA[13]);
                     break;
+                case "etudiants":
+                    charger("select * from etudiants;", dT[14], dA[14]);
+                    break;
             }
         }
+
         #endregion
     }
 }
