@@ -25,6 +25,7 @@ namespace ChevLoc
         public CRUD()
         {
             InitializeComponent();
+            Resize(0,0);
             CRUD_Load();
         }
         private void CRUD_Load()
@@ -117,6 +118,45 @@ namespace ChevLoc
                     dGvChevLoc.Visibility = Visibility.Visible;
                 }
             }
+        }
+
+        private void dGvChevLoc_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        private double ValMini(double AParam, double AValue)
+        {
+            if (AValue > AParam)
+            {
+                return AValue;
+            }
+            else
+            {
+                return AParam;
+            }
+        }
+        private void Resize(double AHeightMini, double AWidthMini)
+        {
+            cbTable.Margin = new System.Windows.Thickness(this.Width / 6, this.Height / 20, this.Width / 6, this.Height * 0.75);
+            dGvChevLoc.Margin = new System.Windows.Thickness(this.Width / 10, this.Height / 5, this.Width / 10, this.Height / 5);
+            btnModifier.Margin = new System.Windows.Thickness(this.Width / 3, this.Height * 0.8, this.Width / 3, this.Height / 10);
+            btnAjouter.Margin = new System.Windows.Thickness(this.Width / 10, this.Height * 0.8, this.Width * 0.7, this.Height / 10);
+            btnSupprimer.Margin = new System.Windows.Thickness(this.Width * 0.7, this.Height * 0.8, this.Width / 30, this.Height / 10);
+            cbTable.Height = ValMini(this.Height / 10,10);
+            cbTable.Width = ValMini(this.Width * 0.75,30);
+            dGvChevLoc.Height = this.Height / 2;
+            dGvChevLoc.Width = this.Width * 3 / 4;
+            btnModifier.Height = ValMini(this.Height / 11,10);
+            btnModifier.Width = ValMini(this.Width / 4,30);
+            btnAjouter.Height = ValMini(this.Height / 11, 10);
+            btnAjouter.Width = ValMini(this.Width / 4, 30);
+            btnSupprimer.Height = ValMini(this.Height / 11, 10);
+            btnSupprimer.Width = ValMini(this.Width / 4, 30);
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Resize(0, 0);
         }
     }
 }
