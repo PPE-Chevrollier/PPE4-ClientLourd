@@ -5,14 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChevLoc"
         mc:Ignorable="d"
-        Title="CRUD" Height="300" Width="300">
+        Title="CRUD" Height="600" Width="600" SizeChanged="Window_SizeChanged">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ComboBox Name="cbTable" Margin="62,10,60,204" SelectionChanged="cbTable_SelectionChanged_1" />
-        <DataGrid Margin="44,70,0,67" Name="dGvChevLoc" HorizontalAlignment="Left" Width="224"/>
-        <Button x:Name="Ajouter" Content="Ajouter" HorizontalAlignment="Left" Margin="32,221,0,0" VerticalAlignment="Top" Width="76"/>
-        <Button x:Name="Supprimer" Content="Supprimer" HorizontalAlignment="Left" Margin="194,221,0,0" VerticalAlignment="Top" Width="74"/>
+        <ComboBox Name="cbTable" Margin="210,162,213,378" SelectionChanged="cbTable_SelectionChanged_1" Width="169" Height="30" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+            <ComboBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ComboBox.RenderTransform>
+        </ComboBox>
+        <DataGrid Margin="32,62,36,68" Name="dGvChevLoc" Width="224" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="dGvChevLoc_MouseDoubleClick" HorizontalAlignment="Center" VerticalAlignment="Center" Height="140"/>
+        <Button x:Name="btnAjouter" Content="Ajouter" HorizontalAlignment="Center" Margin="10,221,206,27" VerticalAlignment="Center" Width="76" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Center" Margin="208,221,10,27" VerticalAlignment="Center" Width="74"/>
+        <Button x:Name="btnModifier" Content="Modifier" HorizontalAlignment="Center" Margin="113,221,103,27" VerticalAlignment="Center" Width="76" RenderTransformOrigin="1.303,0.545" Height="22"/>
     </Grid>
 </Window>
