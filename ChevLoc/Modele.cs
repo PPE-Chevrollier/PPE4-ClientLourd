@@ -262,6 +262,12 @@ namespace ChevLoc
                 case "villes":
                     charger("select * from villes;", dT[13], dA[13]);
                     break;
+                case "CRUDCommentairesEtudiants":
+                    charger("select id_etudiants,login_etudiants from etudiants", dT[14], dA[14]);
+                    break;
+                case "CRUDCommentairesLogements":
+                    charger("select id_logements,rue_logements from logements", dT[15], dA[15]);
+                    break;
             }
         }
         #endregion
