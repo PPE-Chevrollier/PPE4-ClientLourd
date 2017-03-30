@@ -162,5 +162,23 @@ namespace ChevLoc
         {
             Resize(0, 0);
         }
+        private void OuvrirForm(char action)
+        {
+            switch (cbTable.Text)
+             {
+                 case "etudiants" :
+                     FormCRUDEtu FCE = new FormCRUDEtu(action);
+                     break;
+             }
+        }
+        private void btnAjouter_Click(object sender, RoutedEventArgs e)
+        {
+            OuvrirForm('a');
+        }
+
+        private void btnModifier_Click(object sender, RoutedEventArgs e)
+        {
+            OuvrirForm('m');
+        }
     }
 }
