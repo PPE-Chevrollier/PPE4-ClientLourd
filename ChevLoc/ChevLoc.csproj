@@ -76,6 +76,9 @@
     <Compile Include="FormCRUDClasses.xaml.cs">
       <DependentUpon>FormCRUDClasses.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FormCRUDCommentaires.xaml.cs">
+      <DependentUpon>FormCRUDCommentaires.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IndeterminateProgressBar.xaml.cs">
       <DependentUpon>IndeterminateProgressBar.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FormCRUDClasses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormCRUDCommentaires.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
