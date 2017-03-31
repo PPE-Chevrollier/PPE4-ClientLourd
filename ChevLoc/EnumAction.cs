@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChevLoc
 {
-    enum EnumAction
+    public enum EnumAction
     {
          Ajout, Modification
     };

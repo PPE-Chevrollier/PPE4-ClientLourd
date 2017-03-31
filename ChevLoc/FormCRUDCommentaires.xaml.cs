@@ -20,12 +20,12 @@ namespace ChevLoc
     public partial class FormCRUDCommentaires : Window
     {
         private int id;
-        private char actionForm;
-        public FormCRUDCommentaires(char action = 'a')
+        private EnumAction actionForm;
+        public FormCRUDCommentaires(EnumAction action= EnumAction.Ajout)
         {
             InitializeComponent();
             actionForm = action;
-            if (action == 'm')
+            if (action == EnumAction.Ajout)
             {
             }
             else
