@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace ChevLoc
 {
@@ -21,31 +22,19 @@ namespace ChevLoc
     {
         private int id;
         private EnumAction actionForm;
-        public FormCRUDCommentaires(EnumAction action= EnumAction.Ajout)
+        private DataTable dt;
+        public FormCRUDCommentaires(DataTable DT, int id = -1)
         {
             InitializeComponent();
-            actionForm = action;
-            if (action == EnumAction.Ajout)
+            this.dt = DT;
+            if (id==-1)
             {
-                Controleur.Vmodele.charger_donnees("commentaires");
-                if (Controleur.Vmodele.Chargement)
-                {
-                    for (int i = 0; i < Controleur.Vmodele.DT[3].Rows.Count; i++)
-                    {
-                        cb_Etudiants.Items.Add(Controleur.Vmodele.DT[3].Rows[i][0].ToString());
-                    }
-                }
-                Controleur.Vmodele.charger_donnees("commentaires");
-                if (Controleur.Vmodele.Chargement)
-                {
-                    for (int i = 0; i < Controleur.Vmodele.DT[3].Rows.Count; i++)
-                    {
-                        cb_Logements.Items.Add(Controleur.Vmodele.DT[3].Rows[i][1].ToString());
-                    }
-                }
+                actionForm = EnumAction.Ajout;
             }
             else
             {
+                actionForm = EnumAction.Modification;
+                this.id = id;
             }
             this.Show();
         }
@@ -59,5 +48,26 @@ namespace ChevLoc
         {
 
         }
+
+        /*
+        private void FormCRUDCommentaires_Load()
+        {
+            Controleur.Vmodele.charger_donnees("CRUDCommentairesEtudiants");
+            if (Controleur.Vmodele.Chargement)
+            {
+                for (int i = 0; i < Controleur.Vmodele.DT[14].Rows.Count; i++)
+                {
+                    cb_Etudiants.Items.Add(Controleur.Vmodele.DT[14].Rows[i][14].ToString());
+                }
+            }
+            Controleur.Vmodele.charger_donnees("CRUDCommentairesLogements");
+            if (Controleur.Vmodele.Chargement)
+            {
+                for (int i = 0; i < Controleur.Vmodele.DT[15].Rows.Count; i++)
+                {
+                    cb_Logements.Items.Add(Controleur.Vmodele.DT[15].Rows[i][15].ToString());
+                }
+            }
+        }*/
     }
 }

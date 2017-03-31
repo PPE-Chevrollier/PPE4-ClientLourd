@@ -32,7 +32,14 @@ namespace ChevLoc
         {
             Vmodele = new Modele();
         }
-
+        public static DataTable crud_etudiants()
+        {
+            MySqlDataAdapter DA = new MySqlDataAdapter();
+            DataTable ret = new DataTable();
+            vmodele.charger("SELECT FROM WHERE;",ret,DA);
+            return ret;
+        }
+       /*
         /// <summary>
         /// permet le crud sur la table classes
         /// </summary>
@@ -94,7 +101,7 @@ namespace ChevLoc
                 // MessageBox.Show("OK : données enregistrées Classes");
                 formCRUD.Close();  // on ferme la form
             }
-        }
+        }   */
         
         #endregion
     }

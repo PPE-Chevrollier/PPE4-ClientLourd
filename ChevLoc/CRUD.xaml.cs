@@ -162,26 +162,26 @@ namespace ChevLoc
         {
             Resize(0, 0);
         }
-        private void OuvrirForm(EnumAction CRUD)
+        private void OuvrirForm(int CRUD=-1)
         {
             switch (cbTable.Text)
              {
                  case "etudiants" :
-                     FormCRUDEtu FCE = new FormCRUDEtu(CRUD);
+                     FormCRUDEtu FCE = new FormCRUDEtu(Controleur.Vmodele.DT[14],CRUD);
                      break;
                 case "commentaires":
-                    FormCRUDCommentaires FCC = new FormCRUDCommentaires(CRUD);
+                     FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],CRUD);
                     break;
              }
         }
         private void btnAjouter_Click(object sender, RoutedEventArgs e)
         {
-            OuvrirForm(EnumAction.Ajout);
+            OuvrirForm();
         }
 
         private void btnModifier_Click(object sender, RoutedEventArgs e)
         {
-            OuvrirForm(EnumAction.Modification);
+            OuvrirForm(dGvChevLoc.SelectedIndex);
         }
     }
 }
