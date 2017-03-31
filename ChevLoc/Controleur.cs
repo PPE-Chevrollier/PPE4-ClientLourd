@@ -32,13 +32,6 @@ namespace ChevLoc
         {
             Vmodele = new Modele();
         }
-        public static DataTable crud_etudiants()
-        {
-            MySqlDataAdapter DA = new MySqlDataAdapter();
-            DataTable ret = new DataTable();
-            vmodele.charger("SELECT FROM WHERE;",ret,DA);
-            return ret;
-        }
        /*
         /// <summary>
         /// permet le crud sur la table classes
