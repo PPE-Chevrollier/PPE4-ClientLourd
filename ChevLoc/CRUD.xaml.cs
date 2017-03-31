@@ -169,6 +169,9 @@ namespace ChevLoc
                  case "etudiants" :
                      FormCRUDEtu FCE = new FormCRUDEtu(action);
                      break;
+                case "commentaires":
+                    FormCRUDCommentaires FCC = new FormCRUDCommentaires(action);
+                    break;
              }
         }
         private void btnAjouter_Click(object sender, RoutedEventArgs e)

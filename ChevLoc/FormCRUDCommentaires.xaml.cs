@@ -19,11 +19,32 @@ namespace ChevLoc
     /// </summary>
     public partial class FormCRUDCommentaires : Window
     {
-        public FormCRUDCommentaires()
+        private int id;
+        private char actionForm;
+        public FormCRUDCommentaires(char action = 'a')
         {
             InitializeComponent();
-            FormCRUDCommentaires_Load();
+            actionForm = action;
+            if (action == 'm')
+            {
+            }
+            else
+            {
+            }
+            this.Show();
         }
+
+        private void btn_valider_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_annuler_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /*
         private void FormCRUDCommentaires_Load()
         {
             Controleur.Vmodele.charger_donnees("CRUDCommentairesEtudiants");
@@ -42,6 +63,6 @@ namespace ChevLoc
                     cb_Logements.Items.Add(Controleur.Vmodele.DT[15].Rows[i][15].ToString());
                 }
             }
-        }
+        }*/
     }
 }
