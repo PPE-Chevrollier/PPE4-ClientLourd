@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace ChevLoc
 {
@@ -21,15 +22,19 @@ namespace ChevLoc
     {
         private int id;
         private EnumAction actionForm;
-        public FormCRUDCommentaires(EnumAction action= EnumAction.Ajout)
+        private DataTable dt;
+        public FormCRUDCommentaires(DataTable DT, int id = -1)
         {
             InitializeComponent();
-            actionForm = action;
-            if (action == EnumAction.Ajout)
+            this.dt = DT;
+            if (id==-1)
             {
+                actionForm = EnumAction.Ajout;
             }
             else
             {
+                actionForm = EnumAction.Modification;
+                this.id = id;
             }
             this.Show();
         }

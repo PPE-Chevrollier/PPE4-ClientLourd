@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace ChevLoc
 {
@@ -20,20 +21,27 @@ namespace ChevLoc
     public partial class FormCRUDEtu : Window
     {
         private int id;
+        private DataTable tableEtu;
         private EnumAction actionForm;
-        public FormCRUDEtu(EnumAction action= EnumAction.Ajout)
+        public FormCRUDEtu(DataTable DT,int id = -1)
         {
             InitializeComponent();
-            actionForm = action;
-            if (action == EnumAction.Ajout)
+            tableEtu = DT;
+            if (id == -1)
             {
+                actionForm = EnumAction.Ajout;
             }
-            else
+            else          
             {
+                actionForm = EnumAction.Modification;
+                this.id = id;
             }
             this.Show();
         }
-
+        public void ChargerInfoEtu()
+        {
+            
+        }
         private void btnValider_Click(object sender, RoutedEventArgs e)
         {
 

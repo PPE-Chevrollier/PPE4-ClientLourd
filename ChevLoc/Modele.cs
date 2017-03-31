@@ -207,7 +207,7 @@ namespace ChevLoc
         /// <param name="requete">requete à charger</param>
         /// <param name="DT">dataTable</param>
         /// <param name="DA">dataAdapter</param>
-        private void charger(string requete, DataTable DT, MySqlDataAdapter DA)
+        public void charger(string requete, DataTable DT, MySqlDataAdapter DA)
         {
             DA.SelectCommand = new MySqlCommand(requete, myConnection);
 
@@ -280,7 +280,7 @@ namespace ChevLoc
                     charger("select * from villes;", dT[13], dA[13]);
                     break;
                 case "etudiants":
-                    charger("select * from etudiants;", dT[14], dA[14]);
+                    charger("select p.id_personnes,p.nom_personnes,p.prenom_personnes,p.sexe_personnes,e.login_etudiants,e.mdp_etudiants,e.id_logements_etudiants,e.tel_etudiants,e.email_etudiants,e.datenaiss_etudiants from etudiants e inner join personnes p ON e.id_etudiants = p.id_personnes;", dT[14], dA[14]);
                     break;
             }
         }
