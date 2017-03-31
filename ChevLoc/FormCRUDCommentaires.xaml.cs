@@ -27,6 +27,22 @@ namespace ChevLoc
             actionForm = action;
             if (action == EnumAction.Ajout)
             {
+                Controleur.Vmodele.charger_donnees("commentaires");
+                if (Controleur.Vmodele.Chargement)
+                {
+                    for (int i = 0; i < Controleur.Vmodele.DT[3].Rows.Count; i++)
+                    {
+                        cb_Etudiants.Items.Add(Controleur.Vmodele.DT[3].Rows[i][0].ToString());
+                    }
+                }
+                Controleur.Vmodele.charger_donnees("commentaires");
+                if (Controleur.Vmodele.Chargement)
+                {
+                    for (int i = 0; i < Controleur.Vmodele.DT[3].Rows.Count; i++)
+                    {
+                        cb_Logements.Items.Add(Controleur.Vmodele.DT[3].Rows[i][1].ToString());
+                    }
+                }
             }
             else
             {
@@ -43,26 +59,5 @@ namespace ChevLoc
         {
 
         }
-
-        /*
-        private void FormCRUDCommentaires_Load()
-        {
-            Controleur.Vmodele.charger_donnees("CRUDCommentairesEtudiants");
-            if (Controleur.Vmodele.Chargement)
-            {
-                for (int i = 0; i < Controleur.Vmodele.DT[14].Rows.Count; i++)
-                {
-                    cb_Etudiants.Items.Add(Controleur.Vmodele.DT[14].Rows[i][14].ToString());
-                }
-            }
-            Controleur.Vmodele.charger_donnees("CRUDCommentairesLogements");
-            if (Controleur.Vmodele.Chargement)
-            {
-                for (int i = 0; i < Controleur.Vmodele.DT[15].Rows.Count; i++)
-                {
-                    cb_Logements.Items.Add(Controleur.Vmodele.DT[15].Rows[i][15].ToString());
-                }
-            }
-        }*/
     }
 }

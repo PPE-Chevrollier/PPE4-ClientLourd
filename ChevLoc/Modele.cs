@@ -247,7 +247,7 @@ namespace ChevLoc
                     charger("select * from classes;", dT[2], dA[2]);
                     break;
                 case "commentaires":
-                    charger("select * from commentaires;", dT[3], dA[3]);
+                    charger("select login_etudiants,rue_logements,date_commentaires,note_commentaires from commentaires as c inner join etudiants as e on e.id_etudiants=c.id_etudiants inner join logements as l on l.id_logements=c.id_logements;", dT[3], dA[3]);
                     break;
                 case "composent":
                     charger("select * from composent;", dT[4], dA[4]);

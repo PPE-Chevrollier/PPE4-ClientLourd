@@ -112,7 +112,7 @@ namespace ChevLoc
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                         case "etudiants":
-                            bindingSource1.DataSource = Controleur.Vmodele.DT[13];
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[14];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                     }
