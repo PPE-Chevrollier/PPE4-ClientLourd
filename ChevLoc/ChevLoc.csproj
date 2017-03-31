@@ -73,6 +73,7 @@
     <Compile Include="CRUD.xaml.cs">
       <DependentUpon>CRUD.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EnumAction.cs" />
     <Compile Include="FormCRUDClasses.xaml.cs">
       <DependentUpon>FormCRUDClasses.xaml</DependentUpon>
     </Compile>

@@ -20,12 +20,12 @@ namespace ChevLoc
     public partial class FormCRUDEtu : Window
     {
         private int id;
-        private char actionForm;
-        public FormCRUDEtu(char action='a')
+        private EnumAction actionForm;
+        public FormCRUDEtu(EnumAction action= EnumAction.Ajout)
         {
             InitializeComponent();
             actionForm = action;
-            if (action == 'm')
+            if (action == EnumAction.Ajout)
             {
             }
             else
