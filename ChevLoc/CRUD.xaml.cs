@@ -48,6 +48,61 @@ namespace ChevLoc
         /// <param name="e"></param>
         private void cbTable_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
+            ActualiserForm();
+        }
+
+        private void dGvChevLoc_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        private double ValMini(double AParam, double AValue)
+        {
+            if (AValue > AParam)
+            {
+                return AValue;
+            }
+            else
+            {
+                return AParam;
+            }
+        }
+        private void Resize(double AHeightMini, double AWidthMini)
+        {
+            cbTable.Margin = new System.Windows.Thickness(this.Width / 6, this.Height / 20, this.Width / 6, this.Height * 0.75);
+            dGvChevLoc.Margin = new System.Windows.Thickness(this.Width / 10, this.Height / 5, this.Width / 10, this.Height / 5);
+            btnModifier.Margin = new System.Windows.Thickness(this.Width / 3, this.Height * 0.8, this.Width / 3, this.Height / 10);
+            btnAjouter.Margin = new System.Windows.Thickness(this.Width / 10, this.Height * 0.8, this.Width * 0.7, this.Height / 10);
+            btnSupprimer.Margin = new System.Windows.Thickness(this.Width * 0.7, this.Height * 0.8, this.Width / 30, this.Height / 10);
+            cbTable.Height = ValMini(this.Height / 10,10);
+            cbTable.Width = ValMini(this.Width * 0.75,30);
+            dGvChevLoc.Height = this.Height / 2;
+            dGvChevLoc.Width = this.Width * 3 / 4;
+            btnModifier.Height = ValMini(this.Height / 11,10);
+            btnModifier.Width = ValMini(this.Width / 4,30);
+            btnAjouter.Height = ValMini(this.Height / 11, 10);
+            btnAjouter.Width = ValMini(this.Width / 4, 30);
+            btnSupprimer.Height = ValMini(this.Height / 11, 10);
+            btnSupprimer.Width = ValMini(this.Width / 4, 30);
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Resize(0, 0);
+        }
+        private void OuvrirForm(int CRUD=-1)
+        {
+            switch (cbTable.Text)
+             {
+                 case "etudiants" :
+                     FormCRUDEtu FCE = new FormCRUDEtu(Controleur.Vmodele.DT[14],CRUD);
+                     break;
+                case "commentaires":
+                     FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],this,CRUD);
+                    break;
+             }
+        }
+        public void ActualiserForm()
+        {
             if (cbTable.SelectedIndex != -1)
             {
                 string table = cbTable.SelectedItem.ToString(); // récupération de la table sélectionnée
@@ -68,7 +123,7 @@ namespace ChevLoc
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                         case "commentaires":
-                            bindingSource1.DataSource = Controleur.Vmodele.DT[3];
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[16];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                         case "composent":
@@ -123,57 +178,6 @@ namespace ChevLoc
                 }
             }
         }
-
-        private void dGvChevLoc_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-        private double ValMini(double AParam, double AValue)
-        {
-            if (AValue > AParam)
-            {
-                return AValue;
-            }
-            else
-            {
-                return AParam;
-            }
-        }
-        private void Resize(double AHeightMini, double AWidthMini)
-        {
-            cbTable.Margin = new System.Windows.Thickness(this.Width / 6, this.Height / 20, this.Width / 6, this.Height * 0.75);
-            dGvChevLoc.Margin = new System.Windows.Thickness(this.Width / 10, this.Height / 5, this.Width / 10, this.Height / 5);
-            btnModifier.Margin = new System.Windows.Thickness(this.Width / 3, this.Height * 0.8, this.Width / 3, this.Height / 10);
-            btnAjouter.Margin = new System.Windows.Thickness(this.Width / 10, this.Height * 0.8, this.Width * 0.7, this.Height / 10);
-            btnSupprimer.Margin = new System.Windows.Thickness(this.Width * 0.7, this.Height * 0.8, this.Width / 30, this.Height / 10);
-            cbTable.Height = ValMini(this.Height / 10,10);
-            cbTable.Width = ValMini(this.Width * 0.75,30);
-            dGvChevLoc.Height = this.Height / 2;
-            dGvChevLoc.Width = this.Width * 3 / 4;
-            btnModifier.Height = ValMini(this.Height / 11,10);
-            btnModifier.Width = ValMini(this.Width / 4,30);
-            btnAjouter.Height = ValMini(this.Height / 11, 10);
-            btnAjouter.Width = ValMini(this.Width / 4, 30);
-            btnSupprimer.Height = ValMini(this.Height / 11, 10);
-            btnSupprimer.Width = ValMini(this.Width / 4, 30);
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            Resize(0, 0);
-        }
-        private void OuvrirForm(int CRUD=-1)
-        {
-            switch (cbTable.Text)
-             {
-                 case "etudiants" :
-                     FormCRUDEtu FCE = new FormCRUDEtu(Controleur.Vmodele.DT[14],CRUD);
-                     break;
-                case "commentaires":
-                     FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],CRUD);
-                    break;
-             }
-        }
         private void btnAjouter_Click(object sender, RoutedEventArgs e)
         {
             OuvrirForm();
@@ -181,7 +185,35 @@ namespace ChevLoc
 
         private void btnModifier_Click(object sender, RoutedEventArgs e)
         {
-            OuvrirForm(dGvChevLoc.SelectedIndex);
+            if (dGvChevLoc.SelectedIndex != -1)
+            {
+                OuvrirForm(dGvChevLoc.SelectedIndex);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Sélectionnez une ligne à modifier.");
+            }
+        }
+
+        private void btnSupprimer_Click(object sender, RoutedEventArgs e)
+        {
+            if (dGvChevLoc.SelectedIndex != -1)
+            {
+                switch (cbTable.Text)
+                {
+                    case "etudiants":
+                        break;
+                    case "commentaires":
+                        Controleur.Vmodele.DT[3].Rows[dGvChevLoc.SelectedIndex].Delete();
+                        Controleur.Vmodele.DA[3].Update(Controleur.Vmodele.DT[3]);
+                        ActualiserForm();
+                        break;
+                }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Sélectionnez une ligne à supprimer.");
+            }
         }
     }
 }

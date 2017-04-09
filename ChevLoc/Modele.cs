@@ -157,7 +157,7 @@ namespace ChevLoc
         public Modele()
         {
 
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 17; i++)
             {
                 dA.Add(new MySqlDataAdapter());
                 dT.Add(new DataTable());
@@ -247,7 +247,8 @@ namespace ChevLoc
                     charger("select * from classes;", dT[2], dA[2]);
                     break;
                 case "commentaires":
-                    charger("select e.id_etudiants,l.id_logements,login_etudiants,rue_logements,date_commentaires,note_commentaires from commentaires as c inner join etudiants as e on e.id_etudiants=c.id_etudiants inner join logements as l on l.id_logements=c.id_logements;", dT[3], dA[3]);
+                    charger("select * from commentaires", dT[3], dA[3]);
+                    charger("select e.id_etudiants,l.id_logements,login_etudiants,rue_logements,date_commentaires,note_commentaires from commentaires as c inner join etudiants as e on e.id_etudiants=c.id_etudiants inner join logements as l on l.id_logements=c.id_logements;", dT[16], dA[16]);
                     break;
                 case "composent":
                     charger("select * from composent;", dT[4], dA[4]);

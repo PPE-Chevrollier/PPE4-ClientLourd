@@ -22,7 +22,7 @@
         </ComboBox>
         <DataGrid Margin="32,62,36,68" Name="dGvChevLoc" Width="224" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="dGvChevLoc_MouseDoubleClick" HorizontalAlignment="Center" VerticalAlignment="Center" Height="140"/>
         <Button x:Name="btnAjouter" Content="Ajouter" HorizontalAlignment="Center" Margin="10,221,206,27" VerticalAlignment="Center" Width="76" RenderTransformOrigin="0.5,0.5" Click="btnAjouter_Click"/>
-        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Center" Margin="208,221,10,27" VerticalAlignment="Center" Width="74"/>
+        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Center" Margin="208,221,10,27" VerticalAlignment="Center" Width="74" Click="btnSupprimer_Click"/>
         <Button x:Name="btnModifier" Content="Modifier" HorizontalAlignment="Center" Margin="113,221,103,27" VerticalAlignment="Center" Width="76" RenderTransformOrigin="1.303,0.545" Height="22" Click="btnModifier_Click"/>
     </Grid>
 </Window>
