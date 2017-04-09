@@ -76,6 +76,12 @@ namespace ChevLoc
 
         private void btn_valider_Click(object sender, RoutedEventArgs e)
         {
+            string msg = "";
+            if(!ControleSaisie.Entier(tb_Note.Text,0,5,ref msg))
+            {
+                System.Windows.MessageBox.Show(msg + "\n Non validé");
+                return;
+            }
             DataRow dr;
             /*string note = tb_Note.Text;
             string date = dp_Date.ToString();

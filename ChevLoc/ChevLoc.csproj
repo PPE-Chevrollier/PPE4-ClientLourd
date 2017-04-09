@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="cbItem.cs" />
+    <Compile Include="ControleSaisie.cs" />
     <Compile Include="CRUD.xaml.cs">
       <DependentUpon>CRUD.xaml</DependentUpon>
     </Compile>
