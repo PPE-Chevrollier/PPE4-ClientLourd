@@ -8,17 +8,13 @@
         <Label Content="Sexe :" HorizontalAlignment="Left" Margin="28,112,0,0" VerticalAlignment="Top"/>
         <Label Content="Nom :" HorizontalAlignment="Left" Margin="28,19,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="dpDateNaiss" HorizontalAlignment="Left" Margin="140,83,0,0" VerticalAlignment="Top"/>
-        <Label Content="Téléphone :" HorizontalAlignment="Left" Margin="28,143,0,0" VerticalAlignment="Top"/>
-        <Label Content="Email :" HorizontalAlignment="Left" Margin="28,174,0,0" VerticalAlignment="Top"/>
-        <Label Content="Login :" HorizontalAlignment="Left" Margin="331,19,0,0" VerticalAlignment="Top"/>
-        <Label Content="Mot de passe :" HorizontalAlignment="Left" Margin="331,50,0,0" VerticalAlignment="Top"/>
+        <Label Content="Téléphone :" HorizontalAlignment="Left" Margin="331,18,0,0" VerticalAlignment="Top"/>
+        <Label Content="Email :" HorizontalAlignment="Left" Margin="331,49,0,0" VerticalAlignment="Top"/>
         <Label Content="Logement étudiant :" HorizontalAlignment="Left" Margin="331,81,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbTel" HorizontalAlignment="Left" Height="23" Margin="140,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbMail" HorizontalAlignment="Left" Height="23" Margin="140,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbTel" HorizontalAlignment="Left" Height="23" Margin="468,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbMail" HorizontalAlignment="Left" Height="23" Margin="468,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="tbPrenom" HorizontalAlignment="Left" Height="23" Margin="140,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="tbNom" HorizontalAlignment="Left" Height="23" Margin="140,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbMdp" HorizontalAlignment="Left" Height="23" Margin="468,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tbLogin" HorizontalAlignment="Left" Height="23" Margin="468,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="cbSexe" HorizontalAlignment="Left" Margin="140,116,0,0" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="cbLogement" HorizontalAlignment="Left" Margin="468,85,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnValider" Content="Valider" HorizontalAlignment="Left" Margin="140,224,0,0" VerticalAlignment="Top" Width="75" Click="btnValider_Click"/>

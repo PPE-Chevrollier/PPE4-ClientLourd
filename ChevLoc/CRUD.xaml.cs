@@ -94,7 +94,7 @@ namespace ChevLoc
             switch (cbTable.Text)
              {
                  case "etudiants" :
-                     FormCRUDEtu FCE = new FormCRUDEtu(Controleur.Vmodele.DT[14],CRUD);
+                     FormCRUDEtu FCE = new FormCRUDEtu(this,Convert.ToInt16(Controleur.Vmodele.DT[14].Rows[CRUD][0]));
                      break;
                 case "commentaires":
                      FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],this,CRUD);
@@ -206,9 +206,9 @@ namespace ChevLoc
                     case "commentaires":
                         Controleur.Vmodele.DT[3].Rows[dGvChevLoc.SelectedIndex].Delete();
                         Controleur.Vmodele.DA[3].Update(Controleur.Vmodele.DT[3]);
-                        ActualiserForm();
                         break;
                 }
+                ActualiserForm();
             }
             else
             {

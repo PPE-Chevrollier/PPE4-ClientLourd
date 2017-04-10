@@ -21,13 +21,15 @@ namespace ChevLoc
     public partial class FormCRUDEtu : Window
     {
         private int id;
-        private DataTable tableEtu;
         private EnumAction actionForm;
-        public FormCRUDEtu(DataTable DT,int id = -1)
+        private CRUD Parent;
+        public FormCRUDEtu(CRUD Parent,int id = -1)
         {
             Controleur.Vmodele.charger_donnees("logements");
+            Controleur.Vmodele.charger_donnees("personnes");
             InitializeComponent();
-            tableEtu = DT;
+            this.Parent = Parent;
+            ChargerListeDerou();
             if (id == -1)
             {
                 actionForm = EnumAction.Ajout;
@@ -36,25 +38,47 @@ namespace ChevLoc
             {
                 actionForm = EnumAction.Modification;
                 this.id = id;
+                MessageBox.Show(id.ToString());
                 ChargerInfoEtu();
             }
             this.Show();
-            ChargerListeDerou();
         }
         public void ChargerInfoEtu()
         {
-            tbLogin.Text = tableEtu.Rows[id][4].ToString();
-            tbMdp.Text = "";
-            tbMail.Text = tableEtu.Rows[id][8].ToString();
-            tbNom.Text = tableEtu.Rows[id][1].ToString();
-            tbPrenom.Text = tableEtu.Rows[id][2].ToString();
-            tbTel.Text = tableEtu.Rows[id][7].ToString();
+            tbMail.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[8].ToString();
+            tbNom.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[1].ToString();
+            tbPrenom.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[2].ToString();
+            tbTel.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[7].ToString();
+            dpDateNaiss.SelectedDate = (System.DateTime)Controleur.Vmodele.DT[14].Rows.Find(id)[9];
+            if (Controleur.Vmodele.DT[14].Rows.Find(id)[3].ToString() == "M")
+            {
+                cbSexe.SelectedIndex = 0;
+            }
+            else
+            {
+                cbSexe.SelectedIndex = 1;
+            }
+            if (Controleur.Vmodele.DT[14].Rows.Find(id)[6].ToString()!="")
+            {
+                for (int i = 0; i < cbLogement.Items.Count - 1; i++)
+                {
+                    if ((cbLogement.Items[i] as cbItem).GetValueAsInt() == Convert.ToInt16(Controleur.Vmodele.DT[14].Rows.Find(id)[6]))
+                    {
+                        cbLogement.SelectedIndex = i;
+                    }
+                }
+            }
+            else
+            {
+                cbLogement.SelectedIndex = 0;
+            }
         }
         public void ChargerListeDerou()
         {
+            cbLogement.Items.Add(new cbItem("",-1));
             for (int i = 0; i < Controleur.Vmodele.DT[8].Rows.Count;i++ )
             {
-                cbLogement.Items.Add(Controleur.Vmodele.DT[8].Rows[i][0]);
+                cbLogement.Items.Add(new cbItem(Controleur.Vmodele.DT[8].Rows[i][1].ToString(), Controleur.Vmodele.DT[8].Rows[i][0].ToString()));
             }
             cbSexe.Items.Add("M");
             cbSexe.Items.Add("F");

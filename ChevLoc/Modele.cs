@@ -157,7 +157,7 @@ namespace ChevLoc
         public Modele()
         {
 
-            for (int i = 0; i < 17; i++)
+            for (int i = 0; i < 18; i++)
             {
                 dA.Add(new MySqlDataAdapter());
                 dT.Add(new DataTable());
@@ -281,7 +281,9 @@ namespace ChevLoc
                     charger("select * from villes;", dT[13], dA[13]);
                     break;
                 case "etudiants":
+                    charger("select * from etudiants", dT[17], dA[17]);
                     charger("select p.id_personnes,p.nom_personnes,p.prenom_personnes,p.sexe_personnes,e.login_etudiants,e.mdp_etudiants,e.id_logements_etudiants,e.tel_etudiants,e.email_etudiants,e.datenaiss_etudiants from etudiants e inner join personnes p ON e.id_etudiants = p.id_personnes;", dT[14], dA[14]);
+                    DT[14].PrimaryKey = new DataColumn[] {DT[14].Columns[0]};
                     break;
             }
         }
