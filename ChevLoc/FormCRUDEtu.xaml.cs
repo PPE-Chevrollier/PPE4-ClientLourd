@@ -101,56 +101,68 @@ namespace ChevLoc
         {
             string msg = "";
             string msgFinal = "";
-            if (!ControleSaisie.Tel(tbTel.Text, ref msg) || !ControleSaisie.Mail(tbMail.Text, ref msg) || cbSexe.Text == "" || dpDateNaiss.Text == "" || tbNom.Text=="" || tbPrenom.Text=="")
+            if (!ControleSaisie.Tel(tbTel.Text, ref msg) || !ControleSaisie.Mail(tbMail.Text, ref msg) || cbSexe.Text == "" || dpDateNaiss.Text == "" || tbNom.Text == "" || tbPrenom.Text == "")
             {
                 msgFinal += "Formulaire non conforme : \n\n";
                 if (tbNom.Text == "")
                     msgFinal += "- Le nom doit être renseigné \n";
                 if (tbPrenom.Text == "")
                     msgFinal += "- Le prénom doit être renseigné \n";
-                if(!ControleSaisie.Tel(tbTel.Text, ref msg))
-                    msgFinal += "- "+msg +"\n";
-                if(!ControleSaisie.Mail(tbMail.Text, ref msg))
-                    msgFinal += "- "+msg +"\n";
+                if (!ControleSaisie.Tel(tbTel.Text, ref msg))
+                    msgFinal += "- " + msg + "\n";
+                if (!ControleSaisie.Mail(tbMail.Text, ref msg))
+                    msgFinal += "- " + msg + "\n";
                 if (cbSexe.Text == "")
                     msgFinal += "- Le genre doit être renseigné \n";
                 if (dpDateNaiss.Text == "")
                     msgFinal += "- La date de naissance doit être renseignée \n";
                 MessageBox.Show(msgFinal);
                 return;
-            } 
+            }
             if (actionForm == EnumAction.Modification)
             {
-                Controleur.Vmodele.DT[10].Rows.Find(id)[1] = tbNom.Text.ToLower();
-                Controleur.Vmodele.DT[10].Rows.Find(id)[2] = tbPrenom.Text.ToLower();
-                Controleur.Vmodele.DT[10].Rows.Find(id)[3] = cbSexe.SelectedValue;
-                Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
-                Controleur.Vmodele.DT[17].Rows.Find(id)[3] = (cbLogement.SelectedItem as cbItem).Value;
-                Controleur.Vmodele.DT[17].Rows.Find(id)[4] = tbTel.Text;
-                Controleur.Vmodele.DT[17].Rows.Find(id)[5] = tbMail.Text;
-                Controleur.Vmodele.DT[17].Rows.Find(id)[7] = dpDateNaiss.SelectedDate;
-                Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
+                if (Controleur.Vmodele.DT[10].Rows.Find(id)[1].ToString() == tbNom.Text && Controleur.Vmodele.DT[10].Rows.Find(id)[2].ToString() == tbPrenom.Text)
+                {
+                    MessageBox.Show("Etudiant déjà existant.");
+                }
+                else
+                {
+                    Controleur.Vmodele.DT[10].Rows.Find(id)[1] = tbNom.Text.ToLower();
+                    Controleur.Vmodele.DT[10].Rows.Find(id)[2] = tbPrenom.Text.ToLower();
+                    Controleur.Vmodele.DT[10].Rows.Find(id)[3] = cbSexe.SelectedValue;
+                    Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[3] = (cbLogement.SelectedItem as cbItem).Value;
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[4] = tbTel.Text;
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[5] = tbMail.Text;
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[7] = dpDateNaiss.SelectedDate;
+                    Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
+                }
             }
             else
             {
+                string mdp = Parent.GenerateMdp();
                 DataRow NewRowPers = Controleur.Vmodele.DT[10].NewRow();
                 NewRowPers[0] = Controleur.Vmodele.ReturnLastIdPersonne() + 1;
                 NewRowPers[1] = tbNom.Text.ToLower();
                 NewRowPers[2] = tbPrenom.Text.ToLower();
                 NewRowPers[3] = cbSexe.SelectedValue;
-                Controleur.Vmodele.DT[10].Rows.Add(NewRowPers) ;
+                Controleur.Vmodele.DT[10].Rows.Add(NewRowPers);
                 Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
                 Controleur.Vmodele.charger_donnees("personnes");
                 DataRow NewRowEtu = Controleur.Vmodele.DT[17].NewRow();
                 NewRowEtu[0] = Controleur.Vmodele.ReturnLastIdPersonne().ToString();
                 NewRowEtu[1] = GenerateLogin(tbPrenom.Text, tbNom.Text);
-                NewRowEtu[2] = Parent.GenerateMdp();
+                NewRowEtu[2] = Parent.Hash(mdp);
                 NewRowEtu[3] = (cbLogement.SelectedItem as cbItem).Value;
                 NewRowEtu[4] = tbTel.Text;
                 NewRowEtu[5] = tbMail.Text;
                 NewRowEtu[7] = dpDateNaiss.SelectedDate;
                 Controleur.Vmodele.DT[17].Rows.Add(NewRowEtu);
                 Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
+                if (tbMail.Text != "")
+                {
+                    Mail.CreateMessage(tbMail.Text, "Réinitialisation de votre mot de passe", "Bonjour " + Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(2).ToString() + ",\n\nVoici votre nouveau mot de passe : " + mdp + "\nVous pourrez le changer sur nore site " + Mail.site + ", rubrique \"profil\".\n\nL'équipe Chevloc");
+                }
             }
             Parent.ActualiserForm();
             this.Close();

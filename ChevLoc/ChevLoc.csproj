@@ -88,6 +88,9 @@
     <Compile Include="FormCRUDEtu.xaml.cs">
       <DependentUpon>FormCRUDEtu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FormCRUDProprio.xaml.cs">
+      <DependentUpon>FormCRUDProprio.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IndeterminateProgressBar.xaml.cs">
       <DependentUpon>IndeterminateProgressBar.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="FormCRUDProprio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,6 +127,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controleur.cs" />
+    <Compile Include="Mail.cs" />
     <Compile Include="Modele.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

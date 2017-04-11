@@ -165,7 +165,7 @@ namespace ChevLoc
         public Modele()
         {
 
-            for (int i = 0; i < 21; i++)
+            for (int i = 0; i < 22; i++)
             {
                 dA.Add(new MySqlDataAdapter());
                 dT.Add(new DataTable());
@@ -299,6 +299,7 @@ namespace ChevLoc
                     break;
                 case "proprietaires":
                     charger("select * from proprietaires;", dT[18], dA[18]);
+                    charger("select pr.id_proprietaires, pe.nom_personnes, pe.prenom_personnes, pe.sexe_personnes from personnes pe inner join proprietaires pr on pe.id_personnes = pr.id_proprietaires;", dT[21], dA[21]);
                     break;
             }
         }
