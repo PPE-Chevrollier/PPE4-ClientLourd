@@ -82,6 +82,9 @@
     <Compile Include="FormCRUDCommentaires.xaml.cs">
       <DependentUpon>FormCRUDCommentaires.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FormCRUDComposent.xaml.cs">
+      <DependentUpon>FormCRUDComposent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FormCRUDEtu.xaml.cs">
       <DependentUpon>FormCRUDEtu.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FormCRUDCommentaires.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormCRUDComposent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

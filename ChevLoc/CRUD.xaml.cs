@@ -105,9 +105,12 @@ namespace ChevLoc
                          FCE = new FormCRUDEtu(this, Convert.ToInt16(Controleur.Vmodele.DT[14].Rows[CRUD][0]));
                      }
                      break;
+                case "composent" :
+                     FormCRUDComposent FCCo = new FormCRUDComposent(this, CRUD);
+                        break;
                 case "commentaires":
-                     FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],this,CRUD);
-                    break;
+                     FormCRUDCommentaires FCC = new FormCRUDCommentaires(this,CRUD);
+                     break;
              }
         }
         public void ActualiserForm()
@@ -136,7 +139,7 @@ namespace ChevLoc
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                         case "composent":
-                            bindingSource1.DataSource = Controleur.Vmodele.DT[4];
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[20];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                         case "correspondre":
@@ -246,6 +249,10 @@ namespace ChevLoc
                         Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
                         Controleur.Vmodele.DT[10].Rows.Find(Controleur.Vmodele.DT[17].Rows[dGvChevLoc.SelectedIndex][0]).Delete();
                         Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
+                        break;
+                    case "composent":
+                        Controleur.Vmodele.DT[4].Rows[dGvChevLoc.SelectedIndex].Delete();
+                        Controleur.Vmodele.DA[4].Update(Controleur.Vmodele.DT[4]);
                         break;
                     case "commentaires":
                         Controleur.Vmodele.DT[3].Rows[dGvChevLoc.SelectedIndex].Delete();
