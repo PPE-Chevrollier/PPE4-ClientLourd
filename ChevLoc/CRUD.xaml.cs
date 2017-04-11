@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
 
 namespace ChevLoc
 {
@@ -94,7 +95,15 @@ namespace ChevLoc
             switch (cbTable.Text)
              {
                  case "etudiants" :
-                     FormCRUDEtu FCE = new FormCRUDEtu(this,Convert.ToInt16(Controleur.Vmodele.DT[14].Rows[CRUD][0]));
+                     FormCRUDEtu FCE;
+                     if (CRUD == -1)
+                     {
+                         FCE = new FormCRUDEtu(this);
+                     }
+                     else
+                     {
+                         FCE = new FormCRUDEtu(this, Convert.ToInt16(Controleur.Vmodele.DT[14].Rows[CRUD][0]));
+                     }
                      break;
                 case "commentaires":
                      FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],this,CRUD);
@@ -170,6 +179,10 @@ namespace ChevLoc
                             bindingSource1.DataSource = Controleur.Vmodele.DT[14];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
+                        case "proprietaires":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[18];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
                     }
 
                     // mise à jour du dataGridView via le bindingSource rempli par le DataTable
@@ -194,7 +207,33 @@ namespace ChevLoc
                 System.Windows.MessageBox.Show("Sélectionnez une ligne à modifier.");
             }
         }
+        static string Hash(string input)
+        {
+            var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
+            return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
+        }
+        public string GenerateMdp()
+        {
+            string caracteres = "azertyuiopqsdfghjklmwxcvbn1234567890";
+            Random selAlea = new Random();
 
+
+            string sel = "";
+            for (int i = 0; i < 8; i++) // 8 caracteres
+            {
+                int majOrMin = selAlea.Next(2);
+                string carac = caracteres[selAlea.Next(0, caracteres.Length)].ToString();
+                if (majOrMin == 0)
+                {
+                    sel += carac.ToUpper(); // Maj
+                }
+                else
+                {
+                    sel += carac.ToLower(); //Min
+                }
+            }
+            return Hash(sel);
+        }
         private void btnSupprimer_Click(object sender, RoutedEventArgs e)
         {
             if (dGvChevLoc.SelectedIndex != -1)
@@ -202,6 +241,11 @@ namespace ChevLoc
                 switch (cbTable.Text)
                 {
                     case "etudiants":
+                        Controleur.Vmodele.charger_donnees("personnes");
+                        Controleur.Vmodele.DT[17].Rows[dGvChevLoc.SelectedIndex][3] = DBNull.Value;
+                        Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
+                        Controleur.Vmodele.DT[10].Rows.Find(Controleur.Vmodele.DT[17].Rows[dGvChevLoc.SelectedIndex][0]).Delete();
+                        Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
                         break;
                     case "commentaires":
                         Controleur.Vmodele.DT[3].Rows[dGvChevLoc.SelectedIndex].Delete();

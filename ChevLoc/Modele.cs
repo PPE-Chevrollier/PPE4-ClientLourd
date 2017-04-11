@@ -102,7 +102,7 @@ namespace ChevLoc
         /// <param name="sexe">sex</param>
         /// <param name="mdp">mdp</param>
         /// <returns></returns>
-        public int InsertEtudiant(string nom, string prenom, string dnaiss, string sexe, string mdp,string classe, string email)
+        public int InsertEtudiant(string nom, string prenom, string dnaiss, string sexe, string mdp,object classe, string email)
         {
             string sql = @"CALL addetudiant('" + nom + "','" + prenom + "', '" + dnaiss + "', '" + sexe + "','" + mdp +"','" + classe +"','" + email +"');";
             try
@@ -114,6 +114,14 @@ namespace ChevLoc
             {
                 return 0;
             }
+        }
+        public int ReturnLastIdPersonne()
+        {
+            DataTable dT = new DataTable();
+            MySqlDataAdapter dA = new MySqlDataAdapter();
+            string sql = "SELECT id_personnes FROM personnes ORDER BY id_personnes DESC LIMIT 1;";
+            charger(sql, dT, dA);
+            return Convert.ToInt32(dT.Rows[0][0]);
         }
         public DataTable ReturnLoginEmailLastId()
         {
@@ -157,7 +165,7 @@ namespace ChevLoc
         public Modele()
         {
 
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < 20; i++)
             {
                 dA.Add(new MySqlDataAdapter());
                 dT.Add(new DataTable());
@@ -270,6 +278,7 @@ namespace ChevLoc
                     break;
                 case "personnes":
                     charger("select * from personnes ;", dT[10], dA[10]);
+                    DT[10].PrimaryKey = new DataColumn[] { DT[10].Columns[0] };
                     break;
                 case "photos":
                     charger("select * from photos ;", dT[11], dA[11]);
@@ -282,8 +291,13 @@ namespace ChevLoc
                     break;
                 case "etudiants":
                     charger("select * from etudiants", dT[17], dA[17]);
+                    charger("select login_etudiants from etudiants;", dT[19], dA[19]);
                     charger("select p.id_personnes,p.nom_personnes,p.prenom_personnes,p.sexe_personnes,e.login_etudiants,e.mdp_etudiants,e.id_logements_etudiants,e.tel_etudiants,e.email_etudiants,e.datenaiss_etudiants from etudiants e inner join personnes p ON e.id_etudiants = p.id_personnes;", dT[14], dA[14]);
-                    DT[14].PrimaryKey = new DataColumn[] {DT[14].Columns[0]};
+                    DT[14].PrimaryKey = new DataColumn[] { DT[14].Columns[0] };
+                    DT[17].PrimaryKey = new DataColumn[] { DT[17].Columns[0] };
+                    break;
+                case "proprietaires":
+                    charger("select * from proprietaires;", dT[18], dA[18]);
                     break;
             }
         }
