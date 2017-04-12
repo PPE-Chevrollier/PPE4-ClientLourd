@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace ChevLoc
 {
@@ -21,13 +22,15 @@ namespace ChevLoc
     public partial class FormCRUDEtu : Window
     {
         private int id;
-        private DataTable tableEtu;
         private EnumAction actionForm;
-        public FormCRUDEtu(DataTable DT,int id = -1)
+        private CRUD Parent;
+        public FormCRUDEtu(CRUD Parent,int id = -1)
         {
             Controleur.Vmodele.charger_donnees("logements");
+            Controleur.Vmodele.charger_donnees("personnes");
             InitializeComponent();
-            tableEtu = DT;
+            this.Parent = Parent;
+            ChargerListeDerou();
             if (id == -1)
             {
                 actionForm = EnumAction.Ajout;
@@ -39,28 +42,135 @@ namespace ChevLoc
                 ChargerInfoEtu();
             }
             this.Show();
-            ChargerListeDerou();
         }
         public void ChargerInfoEtu()
         {
-            tbLogin.Text = tableEtu.Rows[id][4].ToString();
-            tbMdp.Text = "";
-            tbMail.Text = tableEtu.Rows[id][8].ToString();
-            tbNom.Text = tableEtu.Rows[id][1].ToString();
-            tbPrenom.Text = tableEtu.Rows[id][2].ToString();
-            tbTel.Text = tableEtu.Rows[id][7].ToString();
+            tbMail.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[8].ToString();
+            tbNom.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[1].ToString();
+            tbPrenom.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[2].ToString();
+            tbTel.Text = Controleur.Vmodele.DT[14].Rows.Find(id)[7].ToString();
+            dpDateNaiss.SelectedDate = (System.DateTime)Controleur.Vmodele.DT[14].Rows.Find(id)[9];
+            if (Controleur.Vmodele.DT[14].Rows.Find(id)[3].ToString() == "M")
+            {
+                cbSexe.SelectedIndex = 0;
+            }
+            else
+            {
+                cbSexe.SelectedIndex = 1;
+            }
+            if (Controleur.Vmodele.DT[14].Rows.Find(id)[6].ToString()!="")
+            {
+                for (int i = 0; i < cbLogement.Items.Count - 1; i++)
+                {
+                    if ((cbLogement.Items[i] as cbItem).GetValueAsInt() == Convert.ToInt16(Controleur.Vmodele.DT[14].Rows.Find(id)[6]))
+                    {
+                        cbLogement.SelectedIndex = i;
+                    }
+                }
+            }
+            else
+            {
+                cbLogement.SelectedIndex = 0;
+            }
         }
         public void ChargerListeDerou()
         {
+            cbLogement.Items.Add(new cbItem("",DBNull.Value));
+            cbLogement.SelectedIndex = 0;
             for (int i = 0; i < Controleur.Vmodele.DT[8].Rows.Count;i++ )
             {
-                cbLogement.Items.Add(Controleur.Vmodele.DT[8].Rows[i][0]);
+                cbLogement.Items.Add(new cbItem(Controleur.Vmodele.DT[8].Rows[i][1].ToString(), Controleur.Vmodele.DT[8].Rows[i][0].ToString()));
             }
             cbSexe.Items.Add("M");
             cbSexe.Items.Add("F");
         }
+        private string GenerateLogin(string prenom, string nom, int length = 1)
+        {
+            string login = (prenom.Substring(0,length) + nom).ToLower();
+            for(int i =0; i<Controleur.Vmodele.DT[19].Rows.Count;i++)
+            {
+                if (login == Controleur.Vmodele.DT[19].Rows[i][0].ToString())
+                {
+                    length += 1;
+                    return GenerateLogin(prenom, nom, length);
+                }
+            }
+            return login.ToLower();
+        }
         private void btnValider_Click(object sender, RoutedEventArgs e)
         {
+            string msg = "";
+            string msgFinal = "";
+            if (!ControleSaisie.Tel(tbTel.Text, ref msg) || !ControleSaisie.Mail(tbMail.Text, ref msg) || cbSexe.Text == "" || dpDateNaiss.Text == "" || tbNom.Text == "" || tbPrenom.Text == "")
+            {
+                msgFinal += "Formulaire non conforme : \n\n";
+                if (tbNom.Text == "")
+                    msgFinal += "- Le nom doit être renseigné \n";
+                if (tbPrenom.Text == "")
+                    msgFinal += "- Le prénom doit être renseigné \n";
+                if (!ControleSaisie.Tel(tbTel.Text, ref msg))
+                    msgFinal += "- " + msg + "\n";
+                if (!ControleSaisie.Mail(tbMail.Text, ref msg))
+                    msgFinal += "- " + msg + "\n";
+                if (cbSexe.Text == "")
+                    msgFinal += "- Le genre doit être renseigné \n";
+                if (dpDateNaiss.Text == "")
+                    msgFinal += "- La date de naissance doit être renseignée \n";
+                MessageBox.Show(msgFinal);
+                return;
+            }
+            if (actionForm == EnumAction.Modification)
+            {
+                if (Controleur.Vmodele.DT[10].Rows.Find(id)[1].ToString() == tbNom.Text && Controleur.Vmodele.DT[10].Rows.Find(id)[2].ToString() == tbPrenom.Text)
+                {
+                    MessageBox.Show("Etudiant déjà existant.");
+                }
+                else
+                {
+                    Controleur.Vmodele.DT[10].Rows.Find(id)[1] = tbNom.Text.ToLower();
+                    Controleur.Vmodele.DT[10].Rows.Find(id)[2] = tbPrenom.Text.ToLower();
+                    Controleur.Vmodele.DT[10].Rows.Find(id)[3] = cbSexe.SelectedValue;
+                    Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[3] = (cbLogement.SelectedItem as cbItem).Value;
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[4] = tbTel.Text;
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[5] = tbMail.Text;
+                    Controleur.Vmodele.DT[17].Rows.Find(id)[7] = dpDateNaiss.SelectedDate;
+                    Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
+                }
+            }
+            else
+            {
+                string mdp = Parent.GenerateMdp();
+                DataRow NewRowPers = Controleur.Vmodele.DT[10].NewRow();
+                NewRowPers[0] = Controleur.Vmodele.ReturnLastIdPersonne() + 1;
+                NewRowPers[1] = tbNom.Text.ToLower();
+                NewRowPers[2] = tbPrenom.Text.ToLower();
+                NewRowPers[3] = cbSexe.SelectedValue;
+                Controleur.Vmodele.DT[10].Rows.Add(NewRowPers);
+                Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
+                Controleur.Vmodele.charger_donnees("personnes");
+                DataRow NewRowEtu = Controleur.Vmodele.DT[17].NewRow();
+                NewRowEtu[0] = Controleur.Vmodele.ReturnLastIdPersonne().ToString();
+                NewRowEtu[1] = GenerateLogin(tbPrenom.Text, tbNom.Text);
+                NewRowEtu[2] = Parent.Hash(mdp);
+                NewRowEtu[3] = (cbLogement.SelectedItem as cbItem).Value;
+                NewRowEtu[4] = tbTel.Text;
+                NewRowEtu[5] = tbMail.Text;
+                NewRowEtu[7] = dpDateNaiss.SelectedDate;
+                Controleur.Vmodele.DT[17].Rows.Add(NewRowEtu);
+                Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
+                if (tbMail.Text != "")
+                {
+                    Mail.CreateMessage(tbMail.Text, "Réinitialisation de votre mot de passe", "Bonjour " + Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(2).ToString() + ",\n\nVoici votre nouveau mot de passe : " + mdp + "\nVous pourrez le changer sur nore site " + Mail.site + ", rubrique \"profil\".\n\nL'équipe Chevloc");
+                }
+            }
+            Parent.ActualiserForm();
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

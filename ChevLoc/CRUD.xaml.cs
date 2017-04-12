@@ -12,15 +12,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
+using System.Windows.Controls.Primitives;
 
 namespace ChevLoc
 {
-    /// <summary>
-    /// Logique d'interaction pour CRUD.xaml
-    /// </summary>
     public partial class CRUD : Window
     {
-        private BindingSource bindingSource1;
+        private System.Windows.Forms.BindingSource bindingSource1;
 
         public CRUD()
         {
@@ -36,7 +35,10 @@ namespace ChevLoc
             {
                 for (int i = 0; i < Controleur.Vmodele.DT[0].Rows.Count; i++)
                 {
-                    cbTable.Items.Add(Controleur.Vmodele.DT[0].Rows[i][0].ToString());
+                    if (Controleur.Vmodele.DT[0].Rows[i][0].ToString() != "motifs")
+                    {
+                        cbTable.Items.Add(Controleur.Vmodele.DT[0].Rows[i][0].ToString());
+                    }
                 }
             }
         }
@@ -94,9 +96,32 @@ namespace ChevLoc
             switch (cbTable.Text)
              {
                  case "etudiants" :
-                     FormCRUDEtu FCE = new FormCRUDEtu(Controleur.Vmodele.DT[14],CRUD);
+                     FormCRUDEtu FCE;
+                     if (CRUD == -1)
+                     {
+                         FCE = new FormCRUDEtu(this);
+                     }
+                     else
+                     {
+                         FCE = new FormCRUDEtu(this, Convert.ToInt16(Controleur.Vmodele.DT[14].Rows[CRUD][0]));
+                     }
                      break;
+                case "composent" :
+                     FormCRUDComposent FCCo = new FormCRUDComposent(this, CRUD);
+                        break;
+                case "proprietaires":
+                        FormCRUDProprio FCP;
+                        if (CRUD == -1)
+                        {
+                            FCP = new FormCRUDProprio(this);
+                        }
+                        else
+                        {
+                            FCP = new FormCRUDProprio(this, Convert.ToInt16(Controleur.Vmodele.DT[21].Rows[CRUD][0]));
+                        }
+                        break;
                 case "commentaires":
+<<<<<<< HEAD
                      FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],this,CRUD);
                     break;
                 case "equipements":
@@ -105,6 +130,10 @@ namespace ChevLoc
                 case "appartenir":
                     FormCRUDAppartenir FCA = new FormCRUDAppartenir(Controleur.Vmodele.DT[1], this, CRUD);
                     break;
+=======
+                     FormCRUDCommentaires FCC = new FormCRUDCommentaires(this,CRUD);
+                     break;
+>>>>>>> ClientLourd_MBO
              }
         }
         public void ActualiserForm()
@@ -116,7 +145,7 @@ namespace ChevLoc
                 if (Controleur.Vmodele.Chargement)
                 {
                     // un DT par table
-                    bindingSource1 = new BindingSource();
+                    bindingSource1 = new System.Windows.Forms.BindingSource();
 
                     switch (table)
                     {
@@ -133,7 +162,7 @@ namespace ChevLoc
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                         case "composent":
-                            bindingSource1.DataSource = Controleur.Vmodele.DT[4];
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[20];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
                         case "correspondre":
@@ -176,6 +205,10 @@ namespace ChevLoc
                             bindingSource1.DataSource = Controleur.Vmodele.DT[14];
                             dGvChevLoc.ItemsSource = bindingSource1;
                             break;
+                        case "proprietaires":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[21];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            break;
                     }
 
                     // mise à jour du dataGridView via le bindingSource rempli par le DataTable
@@ -200,7 +233,33 @@ namespace ChevLoc
                 System.Windows.MessageBox.Show("Sélectionnez une ligne à modifier.");
             }
         }
+        public string Hash(string input)
+        {
+            var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
+            return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
+        }
+        public string GenerateMdp()
+        {
+            string caracteres = "azertyuiopqsdfghjklmwxcvbn1234567890";
+            Random selAlea = new Random();
 
+
+            string sel = "";
+            for (int i = 0; i < 8; i++) // 8 caracteres
+            {
+                int majOrMin = selAlea.Next(2);
+                string carac = caracteres[selAlea.Next(0, caracteres.Length)].ToString();
+                if (majOrMin == 0)
+                {
+                    sel += carac.ToUpper(); // Maj
+                }
+                else
+                {
+                    sel += carac.ToLower(); //Min
+                }
+            }
+            return sel;
+        }
         private void btnSupprimer_Click(object sender, RoutedEventArgs e)
         {
             if (dGvChevLoc.SelectedIndex != -1)
@@ -208,11 +267,25 @@ namespace ChevLoc
                 switch (cbTable.Text)
                 {
                     case "etudiants":
+                        Controleur.Vmodele.charger_donnees("personnes");
+                        Mail.CreateMessage(Controleur.Vmodele.DT[17].Rows[dGvChevLoc.SelectedIndex][5].ToString(), "Adieu !", Controleur.Vmodele.DT[10].Rows.Find(Controleur.Vmodele.DT[17].Rows[dGvChevLoc.SelectedIndex][0])[2] + ",\n\nVous êtes le maillon faible ! \n Malheureusement (selon le point de vue), nous avons été contraints (!) de vous supprimer de notre base de données.\nNous espérons sincèrement (?) que vous vous en remettrez. Pour nous, ça va.\n\nL'équipe Chevloc");
+                        Controleur.Vmodele.DT[17].Rows[dGvChevLoc.SelectedIndex][3] = DBNull.Value;
+                        Controleur.Vmodele.DA[17].Update(Controleur.Vmodele.DT[17]);
+                        Controleur.Vmodele.DT[10].Rows.Find(Controleur.Vmodele.DT[17].Rows[dGvChevLoc.SelectedIndex][0]).Delete();
+                        Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
+                        break;
+                    case "proprietaires":
+                        Controleur.Vmodele.charger_donnees("personnes");
+                        Controleur.Vmodele.DT[10].Rows.Find(Controleur.Vmodele.DT[18].Rows[dGvChevLoc.SelectedIndex][0]).Delete();
+                        Controleur.Vmodele.DA[10].Update(Controleur.Vmodele.DT[10]);
+                        break;
+                    case "composent":
+                        Controleur.Vmodele.DT[4].Rows[dGvChevLoc.SelectedIndex].Delete();
+                        Controleur.Vmodele.DA[4].Update(Controleur.Vmodele.DT[4]);
                         break;
                     case "commentaires":
                         Controleur.Vmodele.DT[3].Rows[dGvChevLoc.SelectedIndex].Delete();
                         Controleur.Vmodele.DA[3].Update(Controleur.Vmodele.DT[3]);
-                        ActualiserForm();
                         break;
                     case "equipements":
                         Controleur.Vmodele.DT[7].Rows[dGvChevLoc.SelectedIndex].Delete();
@@ -223,6 +296,7 @@ namespace ChevLoc
                         //a faire
                         break;
                 }
+                ActualiserForm();
             }
             else
             {

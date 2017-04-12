@@ -22,7 +22,14 @@ namespace ChevLoc
         }
         public int GetValueAsInt()
         {
-            return int.Parse(string.Format("{0}",Value));
+            if (Value == DBNull.Value)
+            {
+                return -1;
+            }
+            else
+            {
+                return int.Parse(string.Format("{0}", Value));
+            }
         }
     }
 }

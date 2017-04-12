@@ -22,12 +22,10 @@ namespace ChevLoc
     {
         private int id;
         private EnumAction actionForm;
-        private DataTable dt;
         private CRUD Parent;
-        public FormCRUDCommentaires(DataTable DT, CRUD Parent, int id = -1)
+        public FormCRUDCommentaires(CRUD Parent, int id = -1)
         {
             InitializeComponent();
-            this.dt = DT;
             this.Parent = Parent;
             Controleur.Vmodele.charger_donnees("etudiants");
             if (Controleur.Vmodele.Chargement)
@@ -77,16 +75,26 @@ namespace ChevLoc
         private void btn_valider_Click(object sender, RoutedEventArgs e)
         {
             string msg = "";
-            if(!ControleSaisie.Entier(tb_Note.Text,0,5,ref msg))
+            string msgFinal = "Formulaire non conforme : \n\n";
+            if(!ControleSaisie.Entier(tb_Note.Text,0,5,ref msg)||dp_Date.Text==""||tb_Note.Text==""||cb_Etudiants.SelectedIndex==-1||cb_Logements.SelectedIndex==-1)
             {
-                System.Windows.MessageBox.Show(msg + "\n Non validé");
+                if (tb_Note.Text == "")
+                {
+                    msgFinal += "- Vous devez saisir une note \n";
+                }
+                else if (!ControleSaisie.Entier(tb_Note.Text, 0, 5, ref msg))
+                {
+                    msgFinal += "- " + msg + "\n";
+                }
+                if(dp_Date.Text=="")
+                    msgFinal += "- Vous devez saisir une date \n";
+                if (cb_Etudiants.SelectedIndex == -1)
+                    msgFinal += "- Vous devez sélectionner un étudiant \n";
+                if(cb_Logements.SelectedIndex == -1)
+                    msgFinal += "- Vous devez sélectionner un logement \n";
+                MessageBox.Show(msgFinal);
                 return;
             }
-            DataRow dr;
-            /*string note = tb_Note.Text;
-            string date = dp_Date.ToString();
-            string etudiants = cb_Etudiants.ToString();
-            string logements = cb_Logements.ToString();*/
             if (actionForm == EnumAction.Modification)
             {
                 Controleur.Vmodele.DT[3].Rows[id][0] = (cb_Logements.SelectedItem as cbItem).Value;
