@@ -76,29 +76,25 @@
       <DependentUpon>CRUD.xaml</DependentUpon>
     </Compile>
     <Compile Include="EnumAction.cs" />
-    <Compile Include="FormCRUDAppartenir.xaml.cs">
-      <DependentUpon>FormCRUDAppartenir.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FormCRUDClasses.xaml.cs">
       <DependentUpon>FormCRUDClasses.xaml</DependentUpon>
     </Compile>
     <Compile Include="FormCRUDCommentaires.xaml.cs">
       <DependentUpon>FormCRUDCommentaires.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FormCRUDEquipements.xaml.cs">
-      <DependentUpon>FormCRUDEquipements.xaml</DependentUpon>
+    <Compile Include="FormCRUDComposent.xaml.cs">
+      <DependentUpon>FormCRUDComposent.xaml</DependentUpon>
     </Compile>
     <Compile Include="FormCRUDEtu.xaml.cs">
       <DependentUpon>FormCRUDEtu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormCRUDProprio.xaml.cs">
+      <DependentUpon>FormCRUDProprio.xaml</DependentUpon>
     </Compile>
     <Compile Include="IndeterminateProgressBar.xaml.cs">
       <DependentUpon>IndeterminateProgressBar.xaml</DependentUpon>
     </Compile>
     <Page Include="CRUD.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormCRUDAppartenir.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,13 +106,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FormCRUDEquipements.xaml">
+    <Page Include="FormCRUDComposent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FormCRUDEtu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FormCRUDProprio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -127,6 +127,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controleur.cs" />
+    <Compile Include="Mail.cs" />
     <Compile Include="Modele.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

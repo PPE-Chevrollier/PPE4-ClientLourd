@@ -12,7 +12,7 @@ namespace ChevLoc
         {
             try
             {
-                Convert.ToInt16(str);
+                Convert.ToInt64(str);
                 return true;
             }
             catch (Exception ex)
@@ -26,7 +26,7 @@ namespace ChevLoc
             string msg2="";
             if (Entier(str, ref msg2))
             {
-                if (Convert.ToInt16(str) >= borneMin && Convert.ToInt16(str) <= borneMax)
+                if (Convert.ToInt32(str) >= borneMin && Convert.ToInt32(str) <= borneMax)
                 {
                     return true;
                 }
@@ -45,7 +45,7 @@ namespace ChevLoc
         public static bool Tel(string str, ref string msg)
         {
             string msg2="";
-            if (Entier(str, ref msg2) && str.Length == 10)
+            if ((Entier(str, ref msg2) && str.Length == 10)||str=="")
             {
                 return true;
             }
@@ -57,7 +57,7 @@ namespace ChevLoc
         }
         public static bool Mail(string str, ref string msg)
         {
-            if (str.Contains("@") && (str.Substring(str.Length - 4, 1) == "." || str.Substring(str.Length - 3, 1) == "."))
+            if (str.Contains("@") && (str.Substring(str.Length - 4, 1) == "." || str.Substring(str.Length - 3, 1) == ".")||str=="")
             {
                 return true;
             }

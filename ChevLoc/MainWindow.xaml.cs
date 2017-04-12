@@ -19,7 +19,6 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Excel = Microsoft.Office.Interop.Excel;
-using EASendMail;
 
 namespace ChevLoc
 {
@@ -36,48 +35,12 @@ namespace ChevLoc
 
         #region propriétés
         private string Xlsheetname = "Listes";
-        static string site = "192.168.152.1";
         //private IndeterminateProgressBar pbLoadingStudents;
         #endregion
 
         #region méthodes
-        public static bool CreateMessage(string to,string mdp)
-        {
-            SmtpMail oMail = new SmtpMail("TryIt");
-            SmtpClient oSmtp = new SmtpClient();
+        
 
-            // Set sender email address, please change it to yours
-            oMail.From = "chevloc2@gmail.com";
-
-            // Set recipient email address, please change it to yours
-            oMail.To = to;
-
-            // Set email subject
-            oMail.Subject = "Réinitialisation de votre mot de passe Chevloc";
-
-            // Set email body
-            oMail.TextBody = "Bonjour " + Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(2).ToString() + ",\n\nVoici votre nouveau mot de passe : " + mdp + "\nVous pourrez le changer sur nore site " + site + ", rubrique \"profil\".\n\nL'équipe Chevloc";
-
-            // Your SMTP server address
-            SmtpServer oServer = new SmtpServer("smtp.gmail.com");
-            //oServer.AuthType = SmtpAuthType.XOAUTH2;
-            // Set 25 or 587 port.
-            oServer.Port = 465;
-            // detect TLS connection automatically
-            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
-            oServer.User = "chevloc2@gmail.com";
-            oServer.Password = "Azerty123";
-
-            try
-            {
-                oSmtp.SendMail(oServer, oMail);
-                return true;
-            }
-            catch (Exception ep)
-            {
-                return false;
-            }
-        }
         private void KillProcess()
         {
             System.Diagnostics.Process[] objProcess = System.Diagnostics.Process.GetProcessesByName("EXCEL");
@@ -171,7 +134,7 @@ namespace ChevLoc
                                 {
                                     string mdp = GenerateMdp();
                                     Controleur.Vmodele.ChangePassword(Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(0).ToString(), Hash(mdp));
-                                    CreateMessage(Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(1).ToString(), mdp);
+                                    Mail.CreateMessage(Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(1).ToString(), "Réinitialisation de votre mot de passe Chevloc", "Bonjour " + Controleur.Vmodele.ReturnLoginEmailLastId().Rows[0].ItemArray.ElementAt(2).ToString() + ",\n\nVoici votre nouveau mot de passe : " + mdp + "\nVous pourrez le changer sur nore site " + Mail.site + ", rubrique \"profil\".\n\nL'équipe Chevloc");
                                 }
                                 catch (Exception ex)
                                 {
