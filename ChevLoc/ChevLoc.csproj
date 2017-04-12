@@ -76,11 +76,17 @@
       <DependentUpon>CRUD.xaml</DependentUpon>
     </Compile>
     <Compile Include="EnumAction.cs" />
+    <Compile Include="FormCRUDAppartenir.xaml.cs">
+      <DependentUpon>FormCRUDAppartenir.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FormCRUDClasses.xaml.cs">
       <DependentUpon>FormCRUDClasses.xaml</DependentUpon>
     </Compile>
     <Compile Include="FormCRUDCommentaires.xaml.cs">
       <DependentUpon>FormCRUDCommentaires.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormCRUDEquipements.xaml.cs">
+      <DependentUpon>FormCRUDEquipements.xaml</DependentUpon>
     </Compile>
     <Compile Include="FormCRUDEtu.xaml.cs">
       <DependentUpon>FormCRUDEtu.xaml</DependentUpon>
@@ -92,11 +98,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FormCRUDAppartenir.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FormCRUDClasses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FormCRUDCommentaires.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormCRUDEquipements.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

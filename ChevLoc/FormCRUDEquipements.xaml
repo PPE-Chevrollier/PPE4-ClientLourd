@@ -1,0 +1,16 @@
+﻿<Window x:Class="ChevLoc.FormCRUDEquipements"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChevLoc"
+        mc:Ignorable="d"
+        Title="FormCRUDEquipements" Height="300" Width="300">
+    <Grid>
+        <Label Content="Equipements" HorizontalAlignment="Left" Margin="26,105,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tb_libelleEquipements" HorizontalAlignment="Left" Height="23" Margin="125,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btn_validerEquipements" Content="Valider" HorizontalAlignment="Left" Margin="41,179,0,0" VerticalAlignment="Top" Width="75" Click="btn_validerEquipements_Click"/>
+        <Button x:Name="btn_AnnulerEquipements" Content="Annuler" HorizontalAlignment="Left" Margin="166,179,0,0" VerticalAlignment="Top" Width="75" Click="btn_AnnulerEquipements_Click"/>
+
+    </Grid>
+</Window>

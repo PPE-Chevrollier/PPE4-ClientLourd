@@ -99,6 +99,12 @@ namespace ChevLoc
                 case "commentaires":
                      FormCRUDCommentaires FCC = new FormCRUDCommentaires(Controleur.Vmodele.DT[3],this,CRUD);
                     break;
+                case "equipements":
+                    FormCRUDEquipements FCQ = new FormCRUDEquipements(Controleur.Vmodele.DT[7],this,CRUD);
+                    break;
+                case "appartenir":
+                    FormCRUDAppartenir FCA = new FormCRUDAppartenir(Controleur.Vmodele.DT[1], this, CRUD);
+                    break;
              }
         }
         public void ActualiserForm()
@@ -207,6 +213,14 @@ namespace ChevLoc
                         Controleur.Vmodele.DT[3].Rows[dGvChevLoc.SelectedIndex].Delete();
                         Controleur.Vmodele.DA[3].Update(Controleur.Vmodele.DT[3]);
                         ActualiserForm();
+                        break;
+                    case "equipements":
+                        Controleur.Vmodele.DT[7].Rows[dGvChevLoc.SelectedIndex].Delete();
+                        Controleur.Vmodele.DA[7].Update(Controleur.Vmodele.DT[7]);
+                        ActualiserForm();
+                        break;
+                    case "appartenir":
+                        //a faire
                         break;
                 }
             }
