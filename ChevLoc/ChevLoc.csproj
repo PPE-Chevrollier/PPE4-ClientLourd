@@ -79,9 +79,6 @@
     <Compile Include="FormCRUDAppartenir.xaml.cs">
       <DependentUpon>FormCRUDAppartenir.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FormCRUDClasses.xaml.cs">
-      <DependentUpon>FormCRUDClasses.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FormCRUDCommentaires.xaml.cs">
       <DependentUpon>FormCRUDCommentaires.xaml</DependentUpon>
     </Compile>
@@ -107,10 +104,6 @@
     <Page Include="FormCRUDAppartenir.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="FormCRUDClasses.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FormCRUDCommentaires.xaml">
       <SubType>Designer</SubType>

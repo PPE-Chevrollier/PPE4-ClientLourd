@@ -22,12 +22,10 @@ namespace ChevLoc
     {
         private int id;
         private EnumAction actionForm;
-        private DataTable dt;
         private CRUD Parent;
-        public FormCRUDAppartenir(DataTable DT, CRUD Parent, int id = -1)
+        public FormCRUDAppartenir(CRUD Parent, int id = -1)
         {
             InitializeComponent();
-            this.dt = DT;
             this.Parent = Parent;
             Controleur.Vmodele.charger_donnees("classes");
             if (Controleur.Vmodele.Chargement)
@@ -79,7 +77,19 @@ namespace ChevLoc
 
         private void btn_validerApartenir_Click(object sender, RoutedEventArgs e)
         {
-            DataRow dr;
+            string msg ="";
+            string msgFinal ="Formulaire non conforme : \n\n";
+            if(cb_classesAppartenir.Text == "" || cb_etudiantsAppartenir.Text == "" || !ControleSaisie.Entier(tb_anneeApartenir.Text,1900,Convert.ToInt32(DateTime.Today.Year)+1,ref msg))
+            {
+                if (cb_classesAppartenir.Text == "")
+                    msgFinal += "- Vous devez sélectionner une classe\n";
+                if (cb_etudiantsAppartenir.Text == "")
+                    msgFinal += "- Vous devez sélectionner un étudiant\n";
+                if(!ControleSaisie.Entier(tb_anneeApartenir.Text,1900,Convert.ToInt32(DateTime.Today.Year)+1,ref msg))
+                    msgFinal += msg;
+                MessageBox.Show(msgFinal);
+                return;
+            }
             if (actionForm == EnumAction.Modification)
             {
                 Controleur.Vmodele.DT[1].Rows[id][0] = (cb_classesAppartenir.SelectedItem as cbItem).Value;

@@ -124,12 +124,27 @@ namespace ChevLoc
                      FormCRUDCommentaires FCC = new FormCRUDCommentaires(this,CRUD);
                      break;
                 case "equipements":
-                    FormCRUDEquipements FCQ = new FormCRUDEquipements(Controleur.Vmodele.DT[7], this, CRUD);
+                    FormCRUDEquipements FCQ = new FormCRUDEquipements(this, CRUD);
                     break;
                 case "appartenir":
-                    FormCRUDAppartenir FCA = new FormCRUDAppartenir(Controleur.Vmodele.DT[1], this, CRUD);
+                    FormCRUDAppartenir FCA = new FormCRUDAppartenir(this, CRUD);
                     break;
 
+            }
+        }
+        public void AfficherButton(bool b)
+        {
+            if (b)
+            {
+                btnAjouter.IsEnabled = true;
+                btnModifier.IsEnabled = true;
+                btnSupprimer.IsEnabled = true;
+            }
+            else
+            {
+                btnAjouter.IsEnabled = false;
+                btnModifier.IsEnabled = false;
+                btnSupprimer.IsEnabled = false;
             }
         }
         public void ActualiserForm()
@@ -148,62 +163,102 @@ namespace ChevLoc
                         case "appartenir":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[1];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(true);
                             break;
                         case "classes":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[2];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "commentaires":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[16];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(true);
                             break;
                         case "composent":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[20];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(true);
                             break;
                         case "correspondre":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[5];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "dates":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[6];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "equipements":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[7];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(true);
                             break;
                         case "logements":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[8];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "motifs":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[9];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "personnes":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[10];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "photos":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[11];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "propositions":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[12];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "villes":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[13];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                         case "etudiants":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[14];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(true);
                             break;
                         case "proprietaires":
                             bindingSource1.DataSource = Controleur.Vmodele.DT[21];
                             dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(true);
+                            break;
+                        case "appartements":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[22];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
+                            break;
+                        case "chambresHabitant":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[23];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
+                            break;
+                        case "illustrer":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[24];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
+                            break;
+                        case "messages":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[25];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
+                            break;
+                        case "studios":
+                            bindingSource1.DataSource = Controleur.Vmodele.DT[26];
+                            dGvChevLoc.ItemsSource = bindingSource1;
+                            AfficherButton(false);
                             break;
                     }
 

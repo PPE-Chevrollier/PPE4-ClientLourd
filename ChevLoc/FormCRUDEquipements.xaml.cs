@@ -22,12 +22,10 @@ namespace ChevLoc
     {
         private int id;
         private EnumAction actionForm;
-        private DataTable dt;
         private CRUD Parent;
-        public FormCRUDEquipements(DataTable DT, CRUD Parent, int id = -1)
+        public FormCRUDEquipements(CRUD Parent, int id = -1)
         {
             InitializeComponent();
-            this.dt = DT;
             this.Parent = Parent;
 
             if (id == -1)
@@ -46,7 +44,11 @@ namespace ChevLoc
 
         private void btn_validerEquipements_Click(object sender, RoutedEventArgs e)
         {
-            DataRow dr;
+            if (tb_libelleEquipements.Text == "")
+            {
+                MessageBox.Show("Formulaire non conforme :\n\n-Veuillez saisir un libellé pour l'équipement");
+                return;
+            }
             if (actionForm == EnumAction.Modification)
             {
                 Controleur.Vmodele.DT[7].Rows[id][1] = tb_libelleEquipements.Text;
